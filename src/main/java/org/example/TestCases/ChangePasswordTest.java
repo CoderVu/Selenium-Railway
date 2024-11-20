@@ -39,9 +39,7 @@ public class ChangePasswordTest {
 
 
         String newPassword = generateRandomPassword();
-        String confirmNewPassword = newPassword;
-        String currentPassword = Constant.PASSWORD;
-        changePasswordPage.changePassword(currentPassword, newPassword, confirmNewPassword);
+        changePasswordPage.changePassword(Constant.PASSWORD, newPassword, newPassword);
 
         String actualMsg = changePasswordPage.getLblChangePasswordSuccessMessage().getText();
         String expectedMsg = "Your password has been updated!";

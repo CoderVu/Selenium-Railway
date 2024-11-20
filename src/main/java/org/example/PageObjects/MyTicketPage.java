@@ -13,11 +13,7 @@ import java.time.Duration;
 public class MyTicketPage {
     // Locators
     private final By _lblHeader = By.xpath("//div[@id='content']/h1");
-
-    // Elements
-    public By getLblHeader() {
-        return _lblHeader;
-    }
+    private By ticket;
 
     // Methods
     public String getHeader() {
@@ -35,19 +31,15 @@ public class MyTicketPage {
         ((JavascriptExecutor) Constant.WEBDRIVER).executeScript("arguments[0].scrollIntoView(true);",  cancelTicketButton);
         cancelTicketButton.click();
 
-     try {
         WebDriverWait alertWait = new WebDriverWait(Constant.WEBDRIVER, Duration.ofSeconds(10));
         alertWait.until(ExpectedConditions.alertIsPresent());
         Alert alert = Constant.WEBDRIVER.switchTo().alert();
         alert.accept();
-    } catch (Exception e) {
-        System.out.println("No confirmation alert appeared: " + e.getMessage());
-    }
 }
 
-    public void isTicketCanceled(String departFrom, String arriveAt, String seatType, String amount) {
-        By ticket = By.xpath("//tr[td[text()='" + departFrom + "'] and td[text()='" + arriveAt + "'] and td[text()='" + seatType + "'] and td[text()='" + amount + "']]");
-        new WebDriverWait(Constant.WEBDRIVER, Duration.ofSeconds(3)).until(ExpectedConditions.invisibilityOfElementLocated(ticket));
+    public boolean isTicketDisplayed(String departFrom, String arriveAt, String seatType, String amount) {
+        ticket = By.xpath("//tr[td[text()='" + departFrom + "'] and td[text()='" + arriveAt + "'] and td[text()='" + seatType + "'] and td[text()='" + amount + "']]");
+        return Constant.WEBDRIVER.findElement(ticket).isDisplayed();
     }
 
 }

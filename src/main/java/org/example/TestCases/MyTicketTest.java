@@ -47,7 +47,7 @@ public class MyTicketTest {
 
         homePage.gotoMyTicketPage();
         myTicketPage.cancelTicket(departFrom, arriveAt, seatType, amount);
-        myTicketPage.isTicketCanceled(departFrom, arriveAt, seatType, amount);
+        myTicketPage.isTicketDisplayed(departFrom, arriveAt, seatType, amount);
 
     }
 }

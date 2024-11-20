@@ -24,33 +24,62 @@ public class BookTicketPage {
     private final By _cmbSeatType = By.name("SeatType");
     private final By _cmbTicketAmount = By.name("TicketAmount");
     private final By _btnBookTicket = By.xpath("//input[@value='Book ticket']");
-//    private final By _departStation = By.xpath("//table//tr/td[text()='Sài Gòn']");
-//    private final By _arriveStation = By.xpath("//table//tr/td[text()='Phan Thiết']");
-//    private final By _seatType = By.xpath("//table//tr/td[text()='Soft bed with air conditioner']");
-//    private final By _amount = By.xpath("//table//tr/td[text()='1']");
-//    private final By _date = By.xpath("//table//tr/td[text()='20-11-2024']");
 
     // Elements
-    public WebElement getLblHeader() {
+    protected WebElement getLblHeader() {
         return Constant.WEBDRIVER.findElement(_lblHeader);
     }
-    public WebElement getCmbDepartDate() {
+    protected WebElement getCmbDepartDate() {
         return Constant.WEBDRIVER.findElement(_cmbDepartDate);
     }
-    public WebElement getCmbDepartFrom() {
+    protected WebElement getCmbDepartFrom() {
         return Constant.WEBDRIVER.findElement(_cmbDepartFrom);
     }
-    public WebElement getCmbArriveAt() {
+    protected WebElement getCmbArriveAt() {
         return Constant.WEBDRIVER.findElement(_cmbArriveAt);
     }
-    public WebElement getCmbSeatType() {
+    protected WebElement getCmbSeatType() {
         return Constant.WEBDRIVER.findElement(_cmbSeatType);
     }
-    public WebElement getCmbTicketAmount() {
+    protected WebElement getCmbTicketAmount() {
         return Constant.WEBDRIVER.findElement(_cmbTicketAmount);
     }
-    public WebElement getBtnBookTicket() {
+    protected WebElement getBtnBookTicket() {
         return Constant.WEBDRIVER.findElement(_btnBookTicket);
+    }
+
+    // Methods
+    public BookTicketPage bookTicket(LocalDate departDate, String departFrom, String arriveAt, String seatType, int ticketAmount) {
+        selectDepartDate(departDate);
+        selectDepartFrom(departFrom);
+        selectArriveTo(arriveAt);
+        selectSeatType(seatType);
+        selectTicketAmount(ticketAmount);
+        return this;
+    }
+
+    private void selectDepartDate(LocalDate date) {
+        new Select(getCmbDepartDate()).selectByVisibleText(date.format(DateTimeFormatter.ofPattern("MM/dd/yyyy")));
+    }
+
+    private void selectDepartFrom(String station) {
+        new Select(getCmbDepartFrom()).selectByVisibleText(station);
+
+    }
+
+    private void selectArriveTo(String station) {
+        new Select(getCmbArriveAt()).selectByVisibleText(station);
+
+    }
+
+    private void selectSeatType(String seatType) {
+        new Select(getCmbSeatType()).selectByVisibleText(seatType);
+
+    }
+
+    private void selectTicketAmount(int amount) {
+        new Select(getCmbTicketAmount()).selectByVisibleText(String.valueOf(amount));
+
     }
 
 

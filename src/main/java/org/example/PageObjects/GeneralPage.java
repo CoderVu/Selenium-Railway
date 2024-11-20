@@ -45,11 +45,7 @@ public class GeneralPage {
 
     // Methods
     public String getWelcomeMessage() {
-        try {
-            return getLblWelcomeMessage().getText();
-        } catch (Exception e) {
-            return "";
-        }
+        return getLblWelcomeMessage().getText();
     }
     public LoginPage gotoLoginPage() {
         getTabLogin().click();
@@ -77,11 +73,7 @@ public class GeneralPage {
         return new ChangePasswordPage();
     }
     public boolean isBookTicketTabDisplayed() {
-        try {
             return getTabBookTicket().isDisplayed();
-        } catch (Exception e) {
-            return false;
-        }
     }
 
     public boolean isMyTicketTabDisplayed() {

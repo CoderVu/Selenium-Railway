@@ -15,9 +15,17 @@ import java.util.Random;
 
 public class LoginTest {
 
+    HomePage homePage;
+    LoginPage loginPage;
+    String actualMsg;
+    String expectedMsg;
+
     @BeforeMethod
     public void beforeMethod() {
         System.out.println("Pre-condition");
+        homePage = new HomePage();
+        loginPage = new LoginPage();
+
         // Initialize WebDriver
         Constant.WEBDRIVER = new ChromeDriver();
         Constant.WEBDRIVER.manage().window().maximize();
@@ -30,21 +38,17 @@ public class LoginTest {
         Constant.WEBDRIVER.quit();
     }
 
-    @Test
+    @Test(
+            description = "TC01 - User can log into Railway with valid username and password"
+    )
     public void TC01() {
-        System.out.println("TC01 - User can log into Railway with valid username and password");
-
-        HomePage homePage = new HomePage();
         homePage.open();
 
-        LoginPage loginPage = homePage.gotoLoginPage();
+        loginPage = homePage.gotoLoginPage();
 
         loginPage.login(Constant.USERNAME, Constant.PASSWORD);
 
-        String actualMsg = homePage.getWelcomeMessage();
-        String expectedMsg = "Welcome " + Constant.USERNAME;
-
-        Assert.assertEquals(actualMsg, expectedMsg, "Welcome message is not displayed as expected");
+        Assert.assertEquals(homePage.getWelcomeMessage(), "Welcome " + Constant.USERNAME, "Welcome message is not displayed as expected");
     }
 
     @Test
@@ -64,9 +68,10 @@ public class LoginTest {
         String expectedMsg = "There was a problem with your login and/or errors exist in your form.";
         Assert.assertEquals(actualMsg, expectedMsg, "Error message is not displayed as expected");
     }
-    @Test
+    @Test(
+            description = "TC03: User cannot log into Railway with invalid password"
+    )
     public void TC03() {
-        System.out.println("TC03: User cannot log into Railway with invalid password \n");
         HomePage homePage = new HomePage();
         homePage.open();
 
@@ -110,8 +115,8 @@ public class LoginTest {
 
         for (int i = 1; i <= 4; i++) {
             loginPage.login(Constant.USERNAME, invalidPassword);
-            actualMsg = loginPage.getLblLoginErrorMsg().getText();
         }
+        actualMsg = loginPage.getLblLoginErrorMsg().getText();
         // kiểm tra thông báo lỗi sau 4 lần
         Assert.assertEquals(actualMsg, expectedMsgAfter4Attempts, "Error message after 4 attempts is not displayed as expected");
 
@@ -142,11 +147,14 @@ public class LoginTest {
         MyTicketPage myTicketPage = homePage.gotoMyTicketPage();
         Assert.assertTrue(myTicketPage.isMyTicketPageDisplayed(), "User is not directed to My ticket page");
 
+        Assert.assertEquals(myTicketPage.getHeader(), "Manage ticket", "User is not directed to My ticket page");
+
         ChangePasswordPage changePasswordPage = homePage.gotoChangePasswordPage();
         Assert.assertTrue(changePasswordPage.isChangePasswordPageDisplayed(), "User is not directed to Change password page");
     }
 
     private String generateRandomPassword(Random random, int minLength, int maxLength) {
+        // common-lang3
         int passwordLength = minLength + random.nextInt(maxLength - minLength + 1);
         String characters = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz_";
         StringBuilder password = new StringBuilder();
