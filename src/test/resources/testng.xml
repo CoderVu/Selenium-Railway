@@ -1,0 +1,69 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="Railway Test Suite">
+    <test name="Login Tests">
+        <classes>
+            <class name="org.example.TestCases.LoginTest">
+                <methods>
+                    <include name="TC01" />
+                    <include name="TC02" />
+                    <include name="TC03" />
+                    <include name="TC04" />
+                    <include name="TC05" />
+                    <include name="TC06" />
+                </methods>
+            </class>
+        </classes>
+    </test>
+    <test name="Register Tests">
+        <classes>
+            <class name="org.example.TestCases.RegisterTest">
+                <methods>
+                    <include name="TC07" />
+                    <include name="TC08" />
+                    <include name="TC10" />
+                    <include name="TC11" />
+                </methods>
+            </class>
+        </classes>
+    </test>
+    <test name="Forgot Password Tests">
+        <classes>
+            <class name="org.example.TestCases.ForgotPasswordTest">
+                <methods>
+                    <include name="TC12" />
+                    <include name="TC13" />
+                </methods>
+            </class>
+        </classes>
+    </test>
+    <test name="Change Password Tests">
+        <classes>
+            <class name="org.example.TestCases.ChangePasswordTest">
+                <methods>
+                    <include name="TC09" />
+                </methods>
+            </class>
+        </classes>
+    </test>
+    <test name="Book Ticket Tests">
+        <classes>
+            <class name="org.example.TestCases.BookTicketTest">
+                <methods>
+                    <include name="TC14" />
+                    <include name="TC15" />
+                </methods>
+            </class>
+        </classes>
+    </test>
+    <test name="My Ticket Tests">
+        <classes>
+            <class name="org.example.TestCases.MyTicketTest">
+                <methods>
+                    <include name="TC16" />
+                </methods>
+            </class>
+        </classes>
+    </test>
+
+
+</suite>
