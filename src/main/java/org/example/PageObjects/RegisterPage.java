@@ -1,13 +1,9 @@
 package org.example.PageObjects;
 
-import org.example.Common.Constants.Constant;
+import org.example.Common.constants.Constant;
+import org.example.Common.util.ClickButton;
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
-
-import java.time.Duration;
 
 public class RegisterPage {
     // Locators
@@ -34,34 +30,55 @@ public class RegisterPage {
     protected WebElement getTxtPID() {
         return Constant.WEBDRIVER.findElement(_txtPID);
     }
-    public WebElement getLblRegisterSuccessMessage() {
+    protected WebElement getLblRegisterSuccessMessage() {
         return Constant.WEBDRIVER.findElement(_lblRegisterSuccessMessage);
     }
-    public WebElement getLblRegisterErrorMessage() {
+    protected WebElement getLblRegisterErrorMessage() {
         return Constant.WEBDRIVER.findElement(_lblRegisterErrorMessage);
     }
-    public WebElement getLblPasswordErrorMessage() {
+    protected WebElement getLblPasswordErrorMessage() {
         return Constant.WEBDRIVER.findElement(_lblPasswordErrorMessage);
     }
-    public WebElement getLblPIDErrorMessage() {
+    protected WebElement getLblPIDErrorMessage() {
         return Constant.WEBDRIVER.findElement(_lblPIDErrorMessage);
+    }
+    protected WebElement getBtnRegister() {
+        return Constant.WEBDRIVER.findElement(_btnRegister);
     }
 
     // Methods
     public RegisterPage register(String email, String password, String confirmPassword, String pid) {
-        getTxtEmail().sendKeys(email);
-        getTxtPassword().sendKeys(password);
-        getTxtConfirmPassword().sendKeys(confirmPassword);
-        getTxtPID().sendKeys(pid);
+        EnterEmail(email);
+        EnterPassword(password);
+        EnterConfirmPassword(confirmPassword);
+        EnterPID(pid);
 
-
-        WebDriverWait wait = new WebDriverWait(Constant.WEBDRIVER, Duration.ofSeconds(10));
-        WebElement registerButton = wait.until(ExpectedConditions.elementToBeClickable(_btnRegister));
-
-        // Cuộn xuống cuối trang để click vào nút Register
-        ((JavascriptExecutor) Constant.WEBDRIVER).executeScript("arguments[0].scrollIntoView(true);", registerButton);
-
-        registerButton.click();
+        ClickButton clickButton = new ClickButton(Constant.WEBDRIVER);
+        clickButton.click(getBtnRegister());
         return this;
+    }
+    private void EnterEmail(String email) {
+        getTxtEmail().sendKeys(email);
+    }
+    private void EnterPassword(String password) {
+        getTxtPassword().sendKeys(password);
+    }
+    private void EnterConfirmPassword(String confirmPassword) {
+        getTxtConfirmPassword().sendKeys(confirmPassword);
+    }
+    private void EnterPID(String pid) {
+        getTxtPID().sendKeys(pid);
+    }
+    public String getLblRegisterSuccessMessageText() {
+        return getLblRegisterSuccessMessage().getText();
+    }
+    public String getLblRegisterErrorMessageText() {
+        return getLblRegisterErrorMessage().getText();
+    }
+    public String getLblPasswordErrorMessageText() {
+        return getLblPasswordErrorMessage().getText();
+    }
+    public String getLblPIDErrorMessageText() {
+        return getLblPIDErrorMessage().getText();
     }
 }

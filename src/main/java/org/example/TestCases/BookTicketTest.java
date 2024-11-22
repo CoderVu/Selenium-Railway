@@ -1,6 +1,7 @@
 package org.example.TestCases;
 
-import org.example.Common.Constants.Constant;
+import org.example.Common.constants.Constant;
+import org.example.Common.util.DataTest;
 import org.example.PageObjects.BookTicketPage;
 import org.example.PageObjects.HomePage;
 import org.example.PageObjects.LoginPage;
@@ -12,12 +13,20 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
+import java.util.Map;
 
 public class BookTicketTest {
+    HomePage homePage;
+    LoginPage loginPage;
+    BookTicketPage bookTicketPage;
+    TimetablePage timetablePage;
     @BeforeMethod
     public void beforeMethod() {
         System.out.println("Pre-condition");
+        homePage = new HomePage();
+        loginPage = new LoginPage();
+        bookTicketPage = new BookTicketPage();
+        timetablePage = new TimetablePage();
         Constant.WEBDRIVER = new ChromeDriver();
         Constant.WEBDRIVER.manage().window().maximize();
     }
@@ -28,61 +37,37 @@ public class BookTicketTest {
         Constant.WEBDRIVER.quit();
     }
 
-    @Test
-    public void TC14(){
-        System.out.println("TC14: User can book 1 ticket at a time\n");
+    @Test(description = "TC14 - User can book 1 ticket at a time", dataProvider = "ticketData", dataProviderClass = DataTest.class)
+    public void TC14(LocalDate date, String departFrom, String arriveAt, String seatType, int ticketAmount) {
 
-        HomePage homePage = new HomePage();
         homePage.open();
 
-        LoginPage loginPage = homePage.gotoLoginPage();
-        loginPage.login(Constant.USERNAME, Constant.PASSWORD);
-
+        loginPage = homePage.gotoLoginPage();
+        loginPage.login(Constant.USERNAMEACTIVE, Constant.PASSWORD);
         homePage.gotoBookTicketPage();
 
-        BookTicketPage bookTicketPage = new BookTicketPage();
+        bookTicketPage.bookTicket(date, departFrom, arriveAt, seatType, ticketAmount);
+        Assert.assertEquals(bookTicketPage.getLblHeaderText(), "Ticket booked successfully!", "Error message is not displayed as expected");
 
-        String departFrom = "Sài Gòn";
-        String arriveAt = "Nha Trang";
-        String seatType = "Soft bed with air conditioner";
-        String ticketAmount = "1";
-        bookTicketPage.bookTicket(departFrom, arriveAt, seatType, ticketAmount);
-
-        String actualMsg = bookTicketPage.getLblHeader().getText();
-        String expectedMsg = "Ticket booked successfully!";
-        Assert.assertEquals(actualMsg, expectedMsg, "Error message is not displayed as expected");
-
-        // Check ticket information
-        LocalDate threeDaysAfter = LocalDate.now().plusDays(3);
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
-        String formattedDate = threeDaysAfter.format(formatter);
-        bookTicketPage.isTicketInformationDisplayed(formattedDate, departFrom, arriveAt, seatType, ticketAmount);
-        Assert.assertTrue(bookTicketPage.isTicketInformationDisplayed(formattedDate, departFrom, arriveAt, seatType, ticketAmount));
+        bookTicketPage.isTicketInformationDisplayed(date, departFrom, arriveAt, seatType, ticketAmount);
+        Assert.assertTrue(bookTicketPage.isTicketInformationDisplayed(date, departFrom, arriveAt, seatType, ticketAmount), "Ticket information is not displayed as expected");
 
     }
-    @Test
-    public void TC15(){
-        System.out.println("TC15: User can open 'Book ticket' page by clicking on 'Book ticket' link in 'Train timetable' page\n");
-        HomePage homePage = new HomePage();
+    @Test(description = "TC15 - User can open 'Book ticket' page by clicking on 'Book ticket' link in 'Train timetable' page", dataProvider = "tripData", dataProviderClass = DataTest.class)
+    public void TC15(String departFrom, String arriveAt) {
+
         homePage.open();
 
         LoginPage loginPage = homePage.gotoLoginPage();
-        loginPage.login(Constant.USERNAME, Constant.PASSWORD);
+        loginPage.login(Constant.USERNAMEACTIVE, Constant.PASSWORD);
 
         homePage.gotoTimetablePage();
 
-        TimetablePage timetablePage = new TimetablePage();
-
-        String departFrom = "Huế";
-        String arriveAt = "Sài Gòn";
         timetablePage.bookTicket(departFrom, arriveAt);
+        Assert.assertEquals(bookTicketPage.getLblHeaderText(), "Book ticket", "Error message is not displayed as expected");
 
-        BookTicketPage bookTicketPage = new BookTicketPage();
-        String actualMsg = bookTicketPage.getLblHeader().getText();
-        String expectedMsg = "Book ticket";
-        Assert.assertEquals(actualMsg, expectedMsg, "Error message is not displayed as expected");
-
-        bookTicketPage.isDepartFromAndArriveAtCorrect();
-
+        Map<String, String> actualStations = bookTicketPage.getDepartFromAndArriveAt();
+        Assert.assertEquals(actualStations.get("departStation"), departFrom, "Depart station does not match the selected one");
+        Assert.assertEquals(actualStations.get("arriveStation"), arriveAt, "Arrive station does not match the selected one");
     }
 }

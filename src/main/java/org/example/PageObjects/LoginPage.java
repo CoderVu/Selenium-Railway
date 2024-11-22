@@ -1,18 +1,14 @@
 package org.example.PageObjects;
 
-import org.example.Common.Constants.Constant;
+import org.example.Common.constants.Constant;
+import org.example.Common.util.ClickButton;
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
-
-import java.time.Duration;
 
 public class LoginPage {
     // Locators
-    private final By _txtUsername = By.xpath("//input[@id='username']");
-    private final By _txtPassword = By.xpath("//input[@id='password']");
+    private final By _txtUsername = By.id("username");
+    private final By _txtPassword = By.id("password");
     private final By _btnLogin = By.xpath("//input[@value='login']");
     private final By _lblLoginErrorMsg = By.xpath("//p[@class='message error LoginForm']");
     private final By _lblLoginPage = By.xpath("//*[@id='content']/h1");
@@ -26,34 +22,42 @@ public class LoginPage {
     protected WebElement getTxtPassword() {
         return Constant.WEBDRIVER.findElement(_txtPassword);
     }
-    protected WebElement getBtnLogin() {
-        return Constant.WEBDRIVER.findElement(_btnLogin);
-    }
-    public WebElement getLblLoginErrorMsg() {
+    protected WebElement getLblLoginErrorMsg() {
         return Constant.WEBDRIVER.findElement(_lblLoginErrorMsg);
     }
-    public WebElement getLblLoginPage() {
+    protected WebElement getLblLoginPage() {
         return Constant.WEBDRIVER.findElement(_lblLoginPage);
     }
-    public WebElement getLinkForgotPassword() {
+    protected WebElement getLinkForgotPassword() {
         return Constant.WEBDRIVER.findElement(_linkForgotPassword);
     }
-
+    protected WebElement getBtnLogin() { return Constant.WEBDRIVER.findElement(_btnLogin);
+    }
     // Methods
     public LoginPage login(String username, String password) {
-        getTxtUsername().sendKeys(username);
-        getTxtPassword().sendKeys(password);
+        EnterUsername(username);
+        EnterPassword(password);
 
-        WebDriverWait wait = new WebDriverWait(Constant.WEBDRIVER, Duration.ofSeconds(10));
-        WebElement loginButton = wait.until(ExpectedConditions.elementToBeClickable(_btnLogin));
+        ClickButton clickButton = new ClickButton(Constant.WEBDRIVER);
+        clickButton.click(getBtnLogin());
 
-        ((JavascriptExecutor) Constant.WEBDRIVER).executeScript("arguments[0].scrollIntoView(true);", loginButton);
-
-        loginButton.click();
         return this;
     }
     public LoginPage gotoForgotPasswordPage() {
         getLinkForgotPassword().click();
         return this;
     }
+    private void EnterUsername(String username) {
+        getTxtUsername().sendKeys(username);
+    }
+    private void EnterPassword(String password) {
+        getTxtPassword().sendKeys(password);
+    }
+    public String getLoginErrorMsg() {
+        return getLblLoginErrorMsg().getText();
+    }
+    public String getLoginPage() {
+        return getLblLoginPage().getText();
+    }
+
 }

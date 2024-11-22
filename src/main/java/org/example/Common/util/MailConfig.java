@@ -1,4 +1,4 @@
-package org.example.Common.Util;
+package org.example.Common.util;
 
 import javax.mail.*;
 import java.io.IOException;
@@ -7,7 +7,7 @@ import java.util.Properties;
 
 public class MailConfig {
 
-    public static String ReadEmail(String senderEmail) {
+    public static String ReadEmail() {
 
         String user = "vunguyen.17082003@gmail.com";
         String password = "ztxakyuwuvytnpwo";
@@ -21,6 +21,8 @@ public class MailConfig {
         Store store = null;
         Folder emailFolder = null;
         String emailContent = "";
+        String senderEmail = "thanhletraining03@gmail.com";
+
 
         try {
             store = emailSession.getStore("imaps");
@@ -32,7 +34,7 @@ public class MailConfig {
             Message[] messages = emailFolder.getMessages();
             Arrays.sort(messages, (m1, m2) -> {
                 try {
-                    return m2.getReceivedDate().compareTo(m1.getReceivedDate());
+                    return m2.getReceivedDate().compareTo(m1.getReceivedDate()); // để lấy email mới nhất
                 } catch (MessagingException e) {
                     throw new RuntimeException(e);
                 }
@@ -42,6 +44,7 @@ public class MailConfig {
                 String fromEmail = message.getFrom()[0].toString();
                 if (fromEmail.contains(senderEmail)) {
                     emailContent = message.getContent().toString();
+                    System.out.println("Email Content: " + emailContent);
                     break;
                 }
             }

@@ -1,6 +1,6 @@
 package org.example.PageObjects;
 
-import org.example.Common.Constants.Constant;
+import org.example.Common.constants.Constant;
 
 public class HomePage extends GeneralPage {
     // Locators

@@ -1,6 +1,8 @@
 package org.example.TestCases;
 
-import org.example.Common.Constants.Constant;
+import org.example.Common.constants.Constant;
+import org.example.Common.util.DataTest;
+import org.example.Common.util.Generate;
 import org.example.PageObjects.ChangePasswordPage;
 import org.example.PageObjects.HomePage;
 import org.example.PageObjects.LoginPage;
@@ -11,8 +13,16 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 public class ChangePasswordTest {
+    HomePage homePage;
+    LoginPage loginPage;
+    ChangePasswordPage changePasswordPage;
+
     @BeforeMethod
     public void beforeMethod() {
+        homePage = new HomePage();
+        loginPage = new LoginPage();
+        changePasswordPage = new ChangePasswordPage();
+
         System.out.println("Pre-condition");
         Constant.WEBDRIVER = new ChromeDriver();
         Constant.WEBDRIVER.manage().window().maximize();
@@ -24,30 +34,17 @@ public class ChangePasswordTest {
         Constant.WEBDRIVER.quit();
     }
 
-    @Test
-    public void TC09 () {
-        System.out.println("TC09: User can change password\n");
+    @Test(description = "TC09 - User can change password", dataProvider = "ChangePasswordData", dataProviderClass = DataTest.class)
+    public void TC09 (String newPassword, String confirmPassword) {
 
-        HomePage homePage = new HomePage();
         homePage.open();
 
         LoginPage loginPage = homePage.gotoLoginPage();
-        loginPage.login(Constant.USERNAME, Constant.PASSWORD);
+        loginPage.login(Constant.USERNAMEACTIVE, Constant.PASSWORD);
 
         homePage.gotoChangePasswordPage();
-        ChangePasswordPage changePasswordPage = new ChangePasswordPage();
+        changePasswordPage.changePassword(Constant.PASSWORD, newPassword, confirmPassword);
 
-
-        String newPassword = generateRandomPassword();
-        changePasswordPage.changePassword(Constant.PASSWORD, newPassword, newPassword);
-
-        String actualMsg = changePasswordPage.getLblChangePasswordSuccessMessage().getText();
-        String expectedMsg = "Your password has been updated!";
-        Assert.assertEquals(actualMsg, expectedMsg, "Error message is not displayed as expected");
-    }
-
-    private String generateRandomPassword() {
-        String password = "12345678";
-        return password;
+        Assert.assertEquals(changePasswordPage.getSuccessMessage(), "Your password has been updated!", "Error message is not displayed as expected");
     }
 }

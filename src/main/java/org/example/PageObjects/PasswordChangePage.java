@@ -1,6 +1,6 @@
 package org.example.PageObjects;
 
-import org.example.Common.Constants.Constant;
+import org.example.Common.constants.Constant;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
@@ -10,54 +10,71 @@ public class PasswordChangePage {
     private final By _txtConfirmPassword = By.id("confirmPassword");
     private final By _txtPasswordResetToken = By.id("resetToken");
     private final By _btnResetPassword = By.xpath("//input[@value='Reset Password']");
-    private final By _lblSuccessMessage = By.xpath("//p[@class='message success']");
-    private final By _lblErrorMessageAboveForm = By.xpath("//p[@class='message error']");
-    private final By _lblErrorMessageNextToTheConfirmPasswordField = By.xpath("//label[@for='confirmPassword' and @class='validation-error']");
-    private final By _lblErrorMessageNextToTokenField = By.xpath("//label[@for='resetToken' and @class='validation-error']");
+    private final By _lblErrorMessage = By.xpath("//p[@class='message error']");
+    private final By _lblErrorMessageConfirmPasswordField = By.xpath("//label[@for='confirmPassword' and @class='validation-error']");
+    private final By _lblErrorMessageTokenField = By.xpath("//label[@for='resetToken' and @class='validation-error']");
     private final By _lblHeader = By.xpath("//legend[normalize-space(text())='Password Change Form']");
 
     // Elements
-    public WebElement getTxtNewPassword() {
+    protected WebElement getTxtNewPassword() {
         return Constant.WEBDRIVER.findElement(_txtNewPassword);
     }
-    public WebElement getTxtConfirmPassword() {
+    protected WebElement getTxtConfirmPassword() {
         return Constant.WEBDRIVER.findElement(_txtConfirmPassword);
     }
-    public WebElement getTxtPasswordResetToken() {
+    protected WebElement getTxtPasswordResetToken() {
         return Constant.WEBDRIVER.findElement(_txtPasswordResetToken);
     }
-    public WebElement getBtnResetPassword() {
+    protected WebElement getBtnResetPassword() {
         return Constant.WEBDRIVER.findElement(_btnResetPassword);
     }
-    public WebElement getLblHeader() {
+    protected WebElement getLblHeader() {
         return Constant.WEBDRIVER.findElement(_lblHeader);
     }
-    public WebElement getLblSuccessMessage() {
-        return Constant.WEBDRIVER.findElement(_lblSuccessMessage);
+    protected WebElement getLblErrorMessage() {
+        return Constant.WEBDRIVER.findElement(_lblErrorMessage);
     }
-    public WebElement getLblErrorMessageAboveForm() {
-        return Constant.WEBDRIVER.findElement(_lblErrorMessageAboveForm);
+    protected WebElement getLblErrorMessageConfirmPasswordField() {
+        return Constant.WEBDRIVER.findElement(_lblErrorMessageConfirmPasswordField);
     }
-    public WebElement getLblErrorMessageNextToTheConfirmPasswordField() {
-        return Constant.WEBDRIVER.findElement(_lblErrorMessageNextToTheConfirmPasswordField);
-    }
-    public WebElement getLblErrorMessageNextToTokenField() {
-        return Constant.WEBDRIVER.findElement(_lblErrorMessageNextToTokenField);
+    protected WebElement getLblErrorMessageTokenField() {
+        return Constant.WEBDRIVER.findElement(_lblErrorMessageTokenField);
     }
 
     // Methods
     public PasswordChangePage resetPassword(String newPassword, String confirmPassword, String passwordResetToken) {
-        getTxtNewPassword().sendKeys(newPassword);
-        getTxtConfirmPassword().sendKeys(confirmPassword);
-        getTxtPasswordResetToken().sendKeys(passwordResetToken);
+        EnterNewPassword(newPassword);
+        EnterConfirmPassword(confirmPassword);
+        EnterPasswordResetToken(passwordResetToken);
         getBtnResetPassword().click();
         return this;
     }
     public PasswordChangePage resetPassword(String newPassword, String confirmPassword) {
-        getTxtNewPassword().sendKeys(newPassword);
-        getTxtConfirmPassword().sendKeys(confirmPassword);
+        EnterNewPassword(newPassword);
+        EnterConfirmPassword(confirmPassword);
         getBtnResetPassword().click();
         return this;
+    }
+    private void EnterNewPassword(String newPassword) {
+        getTxtNewPassword().sendKeys(newPassword);
+    }
+    private void EnterConfirmPassword(String confirmPassword) {
+        getTxtConfirmPassword().sendKeys(confirmPassword);
+    }
+    private void EnterPasswordResetToken(String passwordResetToken) {
+        getTxtPasswordResetToken().sendKeys(passwordResetToken);
+    }
+    public String getLblHeaderText() {
+        return getLblHeader().getText();
+    }
+    public String getLblErrorMessageText() {
+        return getLblErrorMessage().getText();
+    }
+    public String getLblErrorMessageConfirmPasswordFieldText() {
+        return getLblErrorMessageConfirmPasswordField().getText();
+    }
+    public String getLblErrorMessageTokenFieldText() {
+        return getLblErrorMessageTokenField().getText();
     }
 
 }

@@ -1,6 +1,6 @@
 package org.example.PageObjects;
 
-import org.example.Common.Constants.Constant;
+import org.example.Common.constants.Constant;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
@@ -72,34 +72,16 @@ public class GeneralPage {
         getTabChangePassword().click();
         return new ChangePasswordPage();
     }
-    public boolean isBookTicketTabDisplayed() {
-            return getTabBookTicket().isDisplayed();
-    }
 
-    public boolean isMyTicketTabDisplayed() {
-        try {
-            return getMyTicketTab().isDisplayed();
-        } catch (Exception e) {
-            return false;
-        }
+    public boolean isMyTicketTabDisplayed() { return getMyTicketTab().isDisplayed() ? true : false;
     }
 
 
-    public boolean isChangePasswordTabDisplayed() {
-        try {
-            return getTabChangePassword().isDisplayed();
-        } catch (Exception e) {
-            return false;
-        }
+    public boolean isChangePasswordTabDisplayed() { return getTabChangePassword().isDisplayed() ? true : false;
     }
 
     public boolean isLogoutTabDisplayed() {
-        try {
-            return getTabLogout().isDisplayed();
-        } catch (Exception e) {
-            return false;
-        }
+        return getTabLogout().isDisplayed() ? true : false;
     }
-
 
 }
