@@ -2,7 +2,7 @@ package org.example.Common.util;
 
 import java.util.Random;
 
-public class Generate {
+public class generate {
     public static String generateRandomPassword(Random random, int minLength, int maxLength) {
         int passwordLength = minLength + random.nextInt(maxLength - minLength + 1);
         String characters = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz_";

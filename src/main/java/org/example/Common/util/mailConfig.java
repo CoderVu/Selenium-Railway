@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.Properties;
 
-public class MailConfig {
+public class mailConfig {
 
     public static String ReadEmail() {
 

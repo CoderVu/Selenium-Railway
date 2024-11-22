@@ -1,7 +1,7 @@
 package org.example.PageObjects;
 
-import org.example.Common.constants.Constant;
-import org.example.Common.util.ClickButtonByScroll;
+import org.example.Common.constants.constant;
+import org.example.Common.util.clickButtonByScroll;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
@@ -17,28 +17,28 @@ public class LoginPage {
 
     // Elements
     protected WebElement getTxtUsername() {
-        return Constant.WEBDRIVER.findElement(_txtUsername);
+        return constant.WEBDRIVER.findElement(_txtUsername);
     }
     protected WebElement getTxtPassword() {
-        return Constant.WEBDRIVER.findElement(_txtPassword);
+        return constant.WEBDRIVER.findElement(_txtPassword);
     }
     protected WebElement getLblLoginErrorMsg() {
-        return Constant.WEBDRIVER.findElement(_lblLoginErrorMsg);
+        return constant.WEBDRIVER.findElement(_lblLoginErrorMsg);
     }
     protected WebElement getLblLoginPage() {
-        return Constant.WEBDRIVER.findElement(_lblLoginPage);
+        return constant.WEBDRIVER.findElement(_lblLoginPage);
     }
     protected WebElement getLinkForgotPassword() {
-        return Constant.WEBDRIVER.findElement(_linkForgotPassword);
+        return constant.WEBDRIVER.findElement(_linkForgotPassword);
     }
-    protected WebElement getBtnLogin() { return Constant.WEBDRIVER.findElement(_btnLogin);
+    protected WebElement getBtnLogin() { return constant.WEBDRIVER.findElement(_btnLogin);
     }
     // Methods
     public LoginPage login(String username, String password) {
         EnterUsername(username);
         EnterPassword(password);
 
-        ClickButtonByScroll clickButtonByScroll = new ClickButtonByScroll(Constant.WEBDRIVER);
+        clickButtonByScroll clickButtonByScroll = new clickButtonByScroll(constant.WEBDRIVER);
         clickButtonByScroll.click(getBtnLogin());
 
         return this;

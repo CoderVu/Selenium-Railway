@@ -4,7 +4,7 @@ import org.openqa.selenium.WebDriver;
 
 import java.time.format.DateTimeFormatter;
 
-public class Constant {
+public class constant {
     public static WebDriver WEBDRIVER;
     public static final String RAILWAY_URL = "http://saferailway.somee.com/Page/HomePage.cshtml";
     public static final String USERNAMEACTIVE = "vunguyen.170803@grr.la";

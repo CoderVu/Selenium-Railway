@@ -1,18 +1,22 @@
 package org.example.PageObjects;
 
-import org.example.Common.constants.Constant;
-import org.example.Common.util.ClickButtonByScroll;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
+import org.example.Common.constants.constant;
+import org.example.Common.util.clickButtonByScroll;
+import org.openqa.selenium.*;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.Select;
-import org.openqa.selenium.support.ui.Sleeper;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.time.Duration;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.List;
 
 import static java.time.Duration.ofSeconds;
 
@@ -30,25 +34,25 @@ public class BookTicketPage {
 
     // Elements
     protected WebElement getLblHeader() {
-        return Constant.WEBDRIVER.findElement(_lblHeader);
+        return constant.WEBDRIVER.findElement(_lblHeader);
     }
     protected WebElement getCmbDepartDate() {
-        return Constant.WEBDRIVER.findElement(_cmbDepartDate);
+        return constant.WEBDRIVER.findElement(_cmbDepartDate);
     }
     protected WebElement getCmbDepartFrom() {
-        return Constant.WEBDRIVER.findElement(_cmbDepartFrom);
+        return constant.WEBDRIVER.findElement(_cmbDepartFrom);
     }
     protected WebElement getCmbArriveAt() {
-        return Constant.WEBDRIVER.findElement(_cmbArriveAt);
+        return constant.WEBDRIVER.findElement(_cmbArriveAt);
     }
     protected WebElement getCmbSeatType() {
-        return Constant.WEBDRIVER.findElement(_cmbSeatType);
+        return constant.WEBDRIVER.findElement(_cmbSeatType);
     }
     protected WebElement getCmbTicketAmount() {
-        return Constant.WEBDRIVER.findElement(_cmbTicketAmount);
+        return constant.WEBDRIVER.findElement(_cmbTicketAmount);
     }
     protected WebElement getBtnBookTicket() {
-        return Constant.WEBDRIVER.findElement(_btnBookTicket);
+        return constant.WEBDRIVER.findElement(_btnBookTicket);
     }
 
     // Methods
@@ -58,7 +62,7 @@ public class BookTicketPage {
         selectArriveTo(arriveAt);
         selectSeatType(seatType);
         selectTicketAmount(ticketAmount);
-        ClickButtonByScroll clickButtonByScroll = new ClickButtonByScroll(Constant.WEBDRIVER);
+        clickButtonByScroll clickButtonByScroll = new clickButtonByScroll(constant.WEBDRIVER);
         clickButtonByScroll.click(getBtnBookTicket());
         return this;
     }
@@ -69,24 +73,23 @@ public class BookTicketPage {
     private void selectDepartFrom(String station) {
         new Select(getCmbDepartFrom()).selectByVisibleText(station);
     }
+    public void selectArriveTo(String arriveStation) {
+        WebDriverWait wait = new WebDriverWait(constant.WEBDRIVER, Duration.ofSeconds(10));
 
-//    private void selectArriveTo(String station) throws InterruptedException {
-//        Thread.sleep(2000);
-//        new Select(getCmbArriveAt()).selectByVisibleText(station);
-//    }
+        wait.until(ExpectedConditions.stalenessOf(getCmbArriveAt()));
 
+        WebElement arriveDropdown = wait.until(ExpectedConditions.presenceOfElementLocated(By.name("ArriveStation")));
+        // Cho truong hop no chon departFrom xong doi 2-3s moi render ra departAt
+        wait.until(driver -> {
+            Select dropdown = new Select(arriveDropdown);
+            return dropdown.getOptions().size() > 1;
+        });
 
-    private void selectArriveTo(String station) {
+        Select arriveSelect = new Select(arriveDropdown);
+        arriveSelect.selectByVisibleText(arriveStation);
 
-        WebElement arriveDropdown = getCmbArriveAt();
-        arriveDropdown.click();
-        arriveDropdown.click();
-        arriveDropdown.click();
-        WebDriverWait wait = new WebDriverWait(Constant.WEBDRIVER, ofSeconds(5));
-        wait.until(ExpectedConditions.elementToBeClickable(arriveDropdown));
-        new Select(getCmbArriveAt()).selectByVisibleText(station);
+        wait.until(driver -> arriveSelect.getFirstSelectedOption().getText().equals(arriveStation));
     }
-
 
     private void selectSeatType(String seatType) {
         new Select(getCmbSeatType()).selectByVisibleText(seatType);
@@ -97,15 +100,14 @@ public class BookTicketPage {
     }
 
     public boolean isTicketInformationDisplayed(LocalDate date, String departStation, String arriveStation, String seatType, int amount) {
-        String formattedDate = date.format(Constant.DATE_FORMATTER);
+        String formattedDate = date.format(constant.DATE_FORMATTER);
         String xpath = "//table//tr[td[text()='" + departStation + "'] and td[text()='" + arriveStation + "'] and td[text()='" + seatType + "'] and td[text()='" + formattedDate + "'] and td[text()='" + amount + "']]";
-        System.out.println(xpath);
         return isElementDisplayed(xpath);
     }
 
     private boolean isElementDisplayed(String xpath) {
         try {
-            WebElement element = Constant.WEBDRIVER.findElement(By.xpath(xpath));
+            WebElement element = constant.WEBDRIVER.findElement(By.xpath(xpath));
             return element.isDisplayed();
         } catch (Exception e) {
             return false;
@@ -113,10 +115,10 @@ public class BookTicketPage {
     }
 
     public String getDepartFrom(){
-        return Constant.WEBDRIVER.findElement(_selectedDepartStation).getText();
+        return constant.WEBDRIVER.findElement(_selectedDepartStation).getText();
     }
     public String getArriveAt(){
-        return Constant.WEBDRIVER.findElement(_selectedArriveStation).getText();
+        return constant.WEBDRIVER.findElement(_selectedArriveStation).getText();
     }
     public String getLblHeaderText(){
         return  getLblHeader().getText();

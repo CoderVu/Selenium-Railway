@@ -1,7 +1,7 @@
 package org.example.PageObjects;
 
-import org.example.Common.constants.Constant;
-import org.example.Common.util.ClickButtonByScroll;
+import org.example.Common.constants.constant;
+import org.example.Common.util.clickButtonByScroll;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -17,27 +17,27 @@ public class MyTicketPage {
 
     // Methods
     public String getHeader() {
-        return Constant.WEBDRIVER.findElement(_lblHeader).getText();
+        return constant.WEBDRIVER.findElement(_lblHeader).getText();
     }
 
-public void cancelTicket(String departFrom, String arriveAt, String seatType, int ticketAmount) {
-    WebElement cancelButton = Constant.WEBDRIVER.findElement(By.xpath("//table//tr[td[text()='" + departFrom + "'] and td[text()='" + arriveAt + "'] and td[text()='" + seatType + "'] and td[text()='" + ticketAmount + "']]//input[@value='Cancel']"));
-    ClickButtonByScroll clickButtonByScroll = new ClickButtonByScroll(Constant.WEBDRIVER);
-    clickButtonByScroll.click(cancelButton);
-    WebDriverWait alertWait = new WebDriverWait(Constant.WEBDRIVER, Duration.ofSeconds(3));
-    alertWait.until(ExpectedConditions.alertIsPresent());
+    public void cancelTicket(String departFrom, String arriveAt, String seatType, int ticketAmount) {
+        WebElement cancelButton = constant.WEBDRIVER.findElement(By.xpath("//table//tr[td[text()='" + departFrom + "'] and td[text()='" + arriveAt + "'] and td[text()='" + seatType + "'] and td[text()='" + ticketAmount + "']]//input[@value='Cancel']"));
+        clickButtonByScroll clickButtonByScroll = new clickButtonByScroll(constant.WEBDRIVER);
+        clickButtonByScroll.click(cancelButton);
+        WebDriverWait alertWait = new WebDriverWait(constant.WEBDRIVER, Duration.ofSeconds(3));
+        alertWait.until(ExpectedConditions.alertIsPresent());
 
-    Alert alert = Constant.WEBDRIVER.switchTo().alert();
-    alert.accept();
+        Alert alert = constant.WEBDRIVER.switchTo().alert();
+        alert.accept();
 
 
-}
+    }
     public boolean isTicketDeleted(int ticketCountBeforeCancel, int ticketCountAfterCancel) {
         return ticketCountBeforeCancel - ticketCountAfterCancel == 1;
     }
 
     public int getTicketCount() {
-        return Constant.WEBDRIVER.findElements(By.xpath("//tr[td[text()]]")).size();
+        return constant.WEBDRIVER.findElements(By.xpath("//tr[td[text()]]")).size();
     }
 
 }

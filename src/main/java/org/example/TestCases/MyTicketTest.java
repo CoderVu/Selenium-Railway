@@ -1,7 +1,7 @@
 package org.example.TestCases;
 
-import org.example.Common.constants.Constant;
-import org.example.Common.util.DataTest;
+import org.example.Common.constants.constant;
+import org.example.DataObjects.DataTest;
 import org.example.PageObjects.BookTicketPage;
 import org.example.PageObjects.HomePage;
 import org.example.PageObjects.LoginPage;
@@ -29,22 +29,22 @@ public class MyTicketTest {
         myTicketPage = new MyTicketPage();
 
         System.out.println("Pre-condition");
-        Constant.WEBDRIVER = new ChromeDriver();
-        Constant.WEBDRIVER.manage().window().maximize();
+        constant.WEBDRIVER = new ChromeDriver();
+        constant.WEBDRIVER.manage().window().maximize();
     }
 
     @AfterMethod
     public void afterMethod() {
         System.out.println("Post-condition");
-        Constant.WEBDRIVER.quit();
+        constant.WEBDRIVER.quit();
     }
-    @Test(description = "TC16 - User can cancel a ticket", dataProvider = "ticketDataCancel", dataProviderClass = DataTest.class)
+    @Test(description = "TC16 - User can cancel a ticket", dataProvider = "ticket_data_cancel", dataProviderClass = DataTest.class)
     public void TC16(LocalDate date, String departFrom, String arriveAt, String seatType, int amount) throws InterruptedException {
 
         homePage.open();
 
         LoginPage loginPage = homePage.gotoLoginPage();
-        loginPage.login(Constant.USERNAMEACTIVE, Constant.PASSWORD);
+        loginPage.login(constant.USERNAMEACTIVE, constant.PASSWORD);
 
         homePage.gotoBookTicketPage();
         bookTicketPage.bookTicket(date, departFrom, arriveAt, seatType, amount);

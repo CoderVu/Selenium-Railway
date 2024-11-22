@@ -3,7 +3,7 @@ package org.example.Common.util;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class ConfirmUrl {
+public class confirmUrl {
 
     public static String ConfirmationUrlRegister(String emailContent) {
 

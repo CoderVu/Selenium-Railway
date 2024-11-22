@@ -1,6 +1,6 @@
 package org.example.PageObjects;
 
-import org.example.Common.constants.Constant;
+import org.example.Common.constants.constant;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
@@ -17,29 +17,29 @@ public class GeneralPage {
 
     // Elements
     protected WebElement getTabLogin() {
-        return Constant.WEBDRIVER.findElement(tabLogin);
+        return constant.WEBDRIVER.findElement(tabLogin);
     }
     protected WebElement getTabLogout() {
-        return Constant.WEBDRIVER.findElement(tabLogout);
+        return constant.WEBDRIVER.findElement(tabLogout);
     }
     protected WebElement getLblWelcomeMessage() {
-        return Constant.WEBDRIVER.findElement(lblWelcomeMessage);
+        return constant.WEBDRIVER.findElement(lblWelcomeMessage);
     }
     protected WebElement getTabRegister() {
-        return Constant.WEBDRIVER.findElement(tabRegister);
+        return constant.WEBDRIVER.findElement(tabRegister);
     }
     protected WebElement getTabTimetable() {
-        return Constant.WEBDRIVER.findElement(tabTimetable);
+        return constant.WEBDRIVER.findElement(tabTimetable);
     }
     protected WebElement getTabBookTicket() {
-        return Constant.WEBDRIVER.findElement(tabBookTicket);
+        return constant.WEBDRIVER.findElement(tabBookTicket);
     }
     protected WebElement getMyTicketTab() {
-        return Constant.WEBDRIVER.findElement(myTicketTab);
+        return constant.WEBDRIVER.findElement(myTicketTab);
     }
     protected WebElement getTabChangePassword() {
 
-        return Constant.WEBDRIVER.findElement(tabChangePassword);
+        return constant.WEBDRIVER.findElement(tabChangePassword);
     }
 
 

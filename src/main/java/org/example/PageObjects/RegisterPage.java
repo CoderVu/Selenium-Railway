@@ -1,7 +1,7 @@
 package org.example.PageObjects;
 
-import org.example.Common.constants.Constant;
-import org.example.Common.util.ClickButtonByScroll;
+import org.example.Common.constants.constant;
+import org.example.Common.util.clickButtonByScroll;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
@@ -19,31 +19,31 @@ public class RegisterPage {
 
     // Elements
     protected WebElement getTxtEmail() {
-        return Constant.WEBDRIVER.findElement(_txtEmail);
+        return constant.WEBDRIVER.findElement(_txtEmail);
     }
     protected WebElement getTxtPassword() {
-        return Constant.WEBDRIVER.findElement(_txtPassword);
+        return constant.WEBDRIVER.findElement(_txtPassword);
     }
     protected WebElement getTxtConfirmPassword() {
-        return Constant.WEBDRIVER.findElement(_txtConfirmPassword);
+        return constant.WEBDRIVER.findElement(_txtConfirmPassword);
     }
     protected WebElement getTxtPID() {
-        return Constant.WEBDRIVER.findElement(_txtPID);
+        return constant.WEBDRIVER.findElement(_txtPID);
     }
     protected WebElement getLblRegisterSuccessMessage() {
-        return Constant.WEBDRIVER.findElement(_lblRegisterSuccessMessage);
+        return constant.WEBDRIVER.findElement(_lblRegisterSuccessMessage);
     }
     protected WebElement getLblRegisterErrorMessage() {
-        return Constant.WEBDRIVER.findElement(_lblRegisterErrorMessage);
+        return constant.WEBDRIVER.findElement(_lblRegisterErrorMessage);
     }
     protected WebElement getLblPasswordErrorMessage() {
-        return Constant.WEBDRIVER.findElement(_lblPasswordErrorMessage);
+        return constant.WEBDRIVER.findElement(_lblPasswordErrorMessage);
     }
     protected WebElement getLblPIDErrorMessage() {
-        return Constant.WEBDRIVER.findElement(_lblPIDErrorMessage);
+        return constant.WEBDRIVER.findElement(_lblPIDErrorMessage);
     }
     protected WebElement getBtnRegister() {
-        return Constant.WEBDRIVER.findElement(_btnRegister);
+        return constant.WEBDRIVER.findElement(_btnRegister);
     }
 
     // Methods
@@ -53,7 +53,7 @@ public class RegisterPage {
         EnterConfirmPassword(confirmPassword);
         EnterPID(pid);
 
-        ClickButtonByScroll clickButtonByScroll = new ClickButtonByScroll(Constant.WEBDRIVER);
+        clickButtonByScroll clickButtonByScroll = new clickButtonByScroll(constant.WEBDRIVER);
         clickButtonByScroll.click(getBtnRegister());
         return this;
     }
