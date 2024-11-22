@@ -3,7 +3,6 @@ package org.example.TestCases;
 import org.example.Common.constants.Constant;
 import org.example.Common.util.ConfirmUrl;
 import org.example.Common.util.DataTest;
-import org.example.Common.util.Generate;
 import org.example.Common.util.MailConfig;
 import org.example.PageObjects.ForgotPasswordPage;
 import org.example.PageObjects.HomePage;
@@ -13,12 +12,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
-
-import javax.mail.MessagingException;
-import java.io.IOException;
-import java.util.Random;
 
 
 public class ForgotPasswordTest {

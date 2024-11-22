@@ -1,7 +1,7 @@
 package org.example.PageObjects;
 
 import org.example.Common.constants.Constant;
-import org.example.Common.util.ClickButton;
+import org.example.Common.util.ClickButtonByScroll;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
@@ -53,8 +53,8 @@ public class RegisterPage {
         EnterConfirmPassword(confirmPassword);
         EnterPID(pid);
 
-        ClickButton clickButton = new ClickButton(Constant.WEBDRIVER);
-        clickButton.click(getBtnRegister());
+        ClickButtonByScroll clickButtonByScroll = new ClickButtonByScroll(Constant.WEBDRIVER);
+        clickButtonByScroll.click(getBtnRegister());
         return this;
     }
     private void EnterEmail(String email) {

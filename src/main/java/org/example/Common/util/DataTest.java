@@ -72,20 +72,20 @@ public class DataTest {
     @DataProvider(name = "ticketData")
     public static Object[][] provideTicketData() {
         return new Object[][]{
-                {LocalDate.now().plusDays(3), "Sài Gòn", "Nha Trang", "Soft bed with air conditioner", 1},
+                {LocalDate.now().plusDays(3), "Huế", "Đà Nẵng", "Soft bed with air conditioner", 1},
         };
     }
     @DataProvider(name = "ticketDataCancel")
     public static Object[][] provideTicketDataCancel() {
         return new Object[][]{
-                {LocalDate.now().plusDays(3),"Sài Gòn", "Nha Trang", "Hard seat", 1},
+                {LocalDate.now().plusDays(3),"Sài Gòn", "Phan Thiết", "Hard seat", 2},
         };
     }
 
     @DataProvider(name = "tripData")
     public static Object[][] provideTripData() {
         return new Object[][]{
-                {"Huế", "Sài Gòn" },
+                {"Nha Trang", "Phan Thiết" },
         };
     }
 

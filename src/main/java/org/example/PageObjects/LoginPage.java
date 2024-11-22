@@ -1,7 +1,7 @@
 package org.example.PageObjects;
 
 import org.example.Common.constants.Constant;
-import org.example.Common.util.ClickButton;
+import org.example.Common.util.ClickButtonByScroll;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
@@ -38,8 +38,8 @@ public class LoginPage {
         EnterUsername(username);
         EnterPassword(password);
 
-        ClickButton clickButton = new ClickButton(Constant.WEBDRIVER);
-        clickButton.click(getBtnLogin());
+        ClickButtonByScroll clickButtonByScroll = new ClickButtonByScroll(Constant.WEBDRIVER);
+        clickButtonByScroll.click(getBtnLogin());
 
         return this;
     }

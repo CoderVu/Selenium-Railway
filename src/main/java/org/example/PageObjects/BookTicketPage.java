@@ -1,10 +1,13 @@
 package org.example.PageObjects;
 
 import org.example.Common.constants.Constant;
-import org.example.Common.util.ClickButton;
+import org.example.Common.util.ClickButtonByScroll;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.Sleeper;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -49,28 +52,41 @@ public class BookTicketPage {
     }
 
     // Methods
-    public BookTicketPage bookTicket(LocalDate departDate, String departFrom, String arriveAt, String seatType, int ticketAmount) {
+    public BookTicketPage bookTicket(LocalDate departDate, String departFrom, String arriveAt, String seatType, int ticketAmount) throws InterruptedException {
         selectDepartDate(departDate);
         selectDepartFrom(departFrom);
         selectArriveTo(arriveAt);
         selectSeatType(seatType);
         selectTicketAmount(ticketAmount);
-        ClickButton clickButton = new ClickButton(Constant.WEBDRIVER);
-        clickButton.click(getBtnBookTicket());
+        ClickButtonByScroll clickButtonByScroll = new ClickButtonByScroll(Constant.WEBDRIVER);
+        clickButtonByScroll.click(getBtnBookTicket());
         return this;
     }
 
     private void selectDepartDate(LocalDate date) {
         new Select(getCmbDepartDate()).selectByVisibleText(date.format(DateTimeFormatter.ofPattern("MM/dd/yyyy")));
     }
-
     private void selectDepartFrom(String station) {
         new Select(getCmbDepartFrom()).selectByVisibleText(station);
     }
 
+//    private void selectArriveTo(String station) throws InterruptedException {
+//        Thread.sleep(2000);
+//        new Select(getCmbArriveAt()).selectByVisibleText(station);
+//    }
+
+
     private void selectArriveTo(String station) {
+
+        WebElement arriveDropdown = getCmbArriveAt();
+        arriveDropdown.click();
+        arriveDropdown.click();
+        arriveDropdown.click();
+        WebDriverWait wait = new WebDriverWait(Constant.WEBDRIVER, ofSeconds(5));
+        wait.until(ExpectedConditions.elementToBeClickable(arriveDropdown));
         new Select(getCmbArriveAt()).selectByVisibleText(station);
     }
+
 
     private void selectSeatType(String seatType) {
         new Select(getCmbSeatType()).selectByVisibleText(seatType);
@@ -81,15 +97,12 @@ public class BookTicketPage {
     }
 
     public boolean isTicketInformationDisplayed(LocalDate date, String departStation, String arriveStation, String seatType, int amount) {
-        String formattedDate = date.format(DateTimeFormatter.ofPattern("MM/dd/yyyy"));
-        boolean isDateDisplayed = isElementDisplayed("//table//tr/td[text()='" + formattedDate + "']");
-        boolean isDepartStationDisplayed = isElementDisplayed("//table//tr/td[text()='" + departStation + "']");
-        boolean isArriveStationDisplayed = isElementDisplayed("//table//tr/td[text()='" + arriveStation + "']");
-        boolean isSeatTypeDisplayed = isElementDisplayed("//table//tr/td[text()='" + seatType + "']");
-        boolean isAmountDisplayed = isElementDisplayed("//table//tr/td[text()='" + amount + "']");
-
-        return isDateDisplayed && isDepartStationDisplayed && isArriveStationDisplayed && isSeatTypeDisplayed && isAmountDisplayed;
+        String formattedDate = date.format(Constant.DATE_FORMATTER);
+        String xpath = "//table//tr[td[text()='" + departStation + "'] and td[text()='" + arriveStation + "'] and td[text()='" + seatType + "'] and td[text()='" + formattedDate + "'] and td[text()='" + amount + "']]";
+        System.out.println(xpath);
+        return isElementDisplayed(xpath);
     }
+
     private boolean isElementDisplayed(String xpath) {
         try {
             WebElement element = Constant.WEBDRIVER.findElement(By.xpath(xpath));
@@ -99,13 +112,11 @@ public class BookTicketPage {
         }
     }
 
-    public Map<String, String> getDepartFromAndArriveAt() {
-        WebElement departStationElement = Constant.WEBDRIVER.findElement(_selectedDepartStation);
-        WebElement arriveStationElement = Constant.WEBDRIVER.findElement(_selectedArriveStation);
-        Map<String, String> stationTexts = new HashMap<>();
-        stationTexts.put("departStation", departStationElement.getText());
-        stationTexts.put("arriveStation", arriveStationElement.getText());
-        return stationTexts;
+    public String getDepartFrom(){
+        return Constant.WEBDRIVER.findElement(_selectedDepartStation).getText();
+    }
+    public String getArriveAt(){
+        return Constant.WEBDRIVER.findElement(_selectedArriveStation).getText();
     }
     public String getLblHeaderText(){
         return  getLblHeader().getText();

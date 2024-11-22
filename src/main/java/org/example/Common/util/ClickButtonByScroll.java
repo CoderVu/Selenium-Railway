@@ -5,11 +5,11 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
-public class ClickButton {
+public class ClickButtonByScroll {
 
     private WebDriver driver;
 
-    public ClickButton(WebDriver driver) {
+    public ClickButtonByScroll(WebDriver driver) {
         this.driver = driver;
     }
 

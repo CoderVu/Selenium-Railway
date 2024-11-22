@@ -38,23 +38,24 @@ public class MyTicketTest {
         System.out.println("Post-condition");
         Constant.WEBDRIVER.quit();
     }
-
     @Test(description = "TC16 - User can cancel a ticket", dataProvider = "ticketDataCancel", dataProviderClass = DataTest.class)
-    public void TC16(LocalDate date, String departFrom, String arriveAt, String seatType, int amount) {
+    public void TC16(LocalDate date, String departFrom, String arriveAt, String seatType, int amount) throws InterruptedException {
 
         homePage.open();
 
         LoginPage loginPage = homePage.gotoLoginPage();
         loginPage.login(Constant.USERNAMEACTIVE, Constant.PASSWORD);
 
-
         homePage.gotoBookTicketPage();
         bookTicketPage.bookTicket(date, departFrom, arriveAt, seatType, amount);
 
         homePage.gotoMyTicketPage();
+        int ticketCountBeforeCancel = myTicketPage.getTicketCount();
+
         myTicketPage.cancelTicket(departFrom, arriveAt, seatType, amount);
+        int ticketCountAfterCancel = myTicketPage.getTicketCount();
 
-        Assert.assertFalse(myTicketPage.isTicketDeleted(departFrom, arriveAt, seatType, amount), "Ticket is not deleted as expected");
-
+        Assert.assertTrue(myTicketPage.isTicketDeleted(ticketCountBeforeCancel, ticketCountAfterCancel), "Ticket was not deleted correctly.");
     }
+
 }

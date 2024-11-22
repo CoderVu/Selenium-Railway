@@ -20,6 +20,7 @@ public class BookTicketTest {
     LoginPage loginPage;
     BookTicketPage bookTicketPage;
     TimetablePage timetablePage;
+
     @BeforeMethod
     public void beforeMethod() {
         System.out.println("Pre-condition");
@@ -38,7 +39,7 @@ public class BookTicketTest {
     }
 
     @Test(description = "TC14 - User can book 1 ticket at a time", dataProvider = "ticketData", dataProviderClass = DataTest.class)
-    public void TC14(LocalDate date, String departFrom, String arriveAt, String seatType, int ticketAmount) {
+    public void TC14(LocalDate date, String departFrom, String arriveAt, String seatType, int ticketAmount) throws InterruptedException {
 
         homePage.open();
 
@@ -53,6 +54,7 @@ public class BookTicketTest {
         Assert.assertTrue(bookTicketPage.isTicketInformationDisplayed(date, departFrom, arriveAt, seatType, ticketAmount), "Ticket information is not displayed as expected");
 
     }
+
     @Test(description = "TC15 - User can open 'Book ticket' page by clicking on 'Book ticket' link in 'Train timetable' page", dataProvider = "tripData", dataProviderClass = DataTest.class)
     public void TC15(String departFrom, String arriveAt) {
 
@@ -66,8 +68,10 @@ public class BookTicketTest {
         timetablePage.bookTicket(departFrom, arriveAt);
         Assert.assertEquals(bookTicketPage.getLblHeaderText(), "Book ticket", "Error message is not displayed as expected");
 
-        Map<String, String> actualStations = bookTicketPage.getDepartFromAndArriveAt();
-        Assert.assertEquals(actualStations.get("departStation"), departFrom, "Depart station does not match the selected one");
-        Assert.assertEquals(actualStations.get("arriveStation"), arriveAt, "Arrive station does not match the selected one");
+        String departStation = bookTicketPage.getDepartFrom();
+        String arriveStation = bookTicketPage.getArriveAt();
+        Assert.assertEquals( departStation,departFrom, "Depart station does not match the selected one");
+        Assert.assertEquals(arriveStation,arriveAt, "Arrive station does not match the selected one");
     }
 }
+

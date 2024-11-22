@@ -13,6 +13,8 @@ import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+import org.testng.asserts.SoftAssert;
+
 import java.util.Random;
 
 
@@ -20,12 +22,14 @@ public class RegisterTest {
     Random random;
     HomePage homePage;
     RegisterPage registerPage;
+    SoftAssert softAssert;
 
     @BeforeMethod
     public void beforeMethod() {
         random = new Random();
         homePage = new HomePage();
         registerPage = new RegisterPage();
+        softAssert = new SoftAssert();
 
         System.out.println("Pre-condition");
         Constant.WEBDRIVER = new ChromeDriver();
@@ -82,15 +86,18 @@ public class RegisterTest {
     }
 
     @Test(description = "TC11: User can't create account while password and PID are not the same", dataProvider = "registerDataEmpty", dataProviderClass = DataTest.class)
-    public void TC11 (String email, String password, String confirmPassword, String pid) {
+    public void TC11(String email, String password, String confirmPassword, String pid) {
 
         homePage.open();
 
         RegisterPage registerPage = homePage.gotoRegisterPage();
         registerPage.register(email, password, confirmPassword, pid);
 
-        Assert.assertEquals(registerPage.getLblRegisterErrorMessageText(),"There're errors in the form. Please correct the errors and try again.", "Error message is not displayed as expected");
-        Assert.assertEquals(registerPage.getLblPasswordErrorMessageText(),"Invalid password length.", "Password error message is not displayed as expected");
-        Assert.assertEquals(registerPage.getLblPIDErrorMessageText(), "Invalid ID length.", "PID error message is not displayed as expected");
+        softAssert.assertEquals(registerPage.getLblRegisterErrorMessageText(), "There're errors in the form. Please correct the errors and try again.", "Error message is not displayed as expected");
+        softAssert.assertEquals(registerPage.getLblPasswordErrorMessageText(), "Invalid password length.", "Password error message is not displayed as expected");
+        softAssert.assertEquals(registerPage.getLblPIDErrorMessageText(), "Invalid ID length.", "PID error message is not displayed as expected");
+
+        softAssert.assertAll();
     }
+
 }
