@@ -1,8 +1,8 @@
-package org.example.Common.util;
+package org.example.CM.util;
 
 import java.util.Random;
 
-public class generate {
+public class Generate {
     public static String generateRandomPassword(Random random, int minLength, int maxLength) {
         int passwordLength = minLength + random.nextInt(maxLength - minLength + 1);
         String characters = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz_";

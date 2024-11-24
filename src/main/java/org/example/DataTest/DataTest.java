@@ -1,21 +1,21 @@
-package org.example.DataObjects;
+package org.example.DT;
 
-import org.example.Common.util.generate;
+import org.example.common.util.Generate;
 import org.testng.annotations.DataProvider;
 
 import java.time.LocalDate;
 import java.util.Random;
 
-import static org.example.Common.util.generate.generateRandomPassword;
+import static org.example.common.util.Generate.generateRandomPassword;
 
 public class DataTest {
     @DataProvider(name = "register_data")
     public static Object[][] provideRegisterData() {
         Random random = new Random();
-        String email = generate.generateEmail(random);
-        String password = generate.genaratePassword();
+        String email = Generate.generateEmail(random);
+        String password = Generate.genaratePassword();
         String confirmPassword = password;
-        String pid = generate.generateRandomPID(random, 8, 20);
+        String pid = Generate.generateRandomPID(random, 8, 20);
         return new Object[][]{
                 {email, password, confirmPassword, pid},
         };
@@ -23,10 +23,10 @@ public class DataTest {
     @DataProvider(name = "register_data_invalid")
     public static Object[][] provideRegisterDataInvalid() {
         Random random = new Random();
-        String email = generate.generateEmail(random);
-        String password = generate.generateRandomPassword(random, 8, 64);
-        String confirmPassword = generate.generateRandomPassword(random, 8, 64);
-        String pid = generate.generateRandomPID(random, 8, 20);
+        String email = Generate.generateEmail(random);
+        String password = Generate.generateRandomPassword(random, 8, 64);
+        String confirmPassword = Generate.generateRandomPassword(random, 8, 64);
+        String pid = Generate.generateRandomPID(random, 8, 20);
         return new Object[][]{
                 {email, password, confirmPassword, pid},
         };
@@ -34,10 +34,10 @@ public class DataTest {
     @DataProvider(name = "register_data_empty")
     public static Object[][] provideRegisterDataEmpty() {
         Random random = new Random();
-        String email = generate.generateEmail(random);
-        String password = generate.generatePasswordEmpty();
-        String confirmPassword = generate.generatePasswordEmpty();
-        String pid = generate.generatePIPEmpty();
+        String email = Generate.generateEmail(random);
+        String password = Generate.generatePasswordEmpty();
+        String confirmPassword = Generate.generatePasswordEmpty();
+        String pid = Generate.generatePIPEmpty();
         return new Object[][]{
                 {email, password, confirmPassword, pid},
         };
@@ -73,13 +73,14 @@ public class DataTest {
     @DataProvider(name = "ticket_data")
     public static Object[][] provideTicketData() {
         return new Object[][]{
-                {LocalDate.now().plusDays(3), "Phan Thiết", "Đà Nẵng", "Soft bed with air conditioner", 1},
+             {LocalDate.now().plusDays(3), "Phan Thiết", "Đà Nẵng", "Soft bed with air conditioner", 1},
+            //{LocalDate.now().plusDays(3), "Sài Gòn", "Huế", "Soft bed with air conditioner", 1},
         };
     }
     @DataProvider(name = "ticket_data_cancel")
     public static Object[][] provideTicketDataCancel() {
         return new Object[][]{
-                {LocalDate.now().plusDays(3),"Sài Gòn", "Phan Thiết", "Hard seat", 2},
+                {LocalDate.now().plusDays(3),"Quảng Ngãi", "Huế", "Hard seat", 1},
         };
     }
 

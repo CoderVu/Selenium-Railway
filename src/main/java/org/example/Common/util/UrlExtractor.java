@@ -1,9 +1,9 @@
-package org.example.Common.util;
+package org.example.CM.util;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class confirmUrl {
+public class UrlExtractor {
 
     public static String ConfirmationUrlRegister(String emailContent) {
 

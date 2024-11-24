@@ -1,6 +1,6 @@
-package org.example.PageObjects;
+package org.example.PO;
 
-import org.example.Common.constants.constant;
+import org.example.common.constants.Constant;
 
 public class HomePage extends GeneralPage {
     // Locators
@@ -10,7 +10,7 @@ public class HomePage extends GeneralPage {
 
     // Methods
     public HomePage open() {
-        constant.WEBDRIVER.get(constant.RAILWAY_URL);
+        Constant.WEBDRIVER.get(Constant.RAILWAY_URL);
         return this;
     }
 

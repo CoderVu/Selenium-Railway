@@ -1,5 +1,5 @@
-package org.example.PageObjects;
-import org.example.Common.constants.constant;
+package org.example.PO;
+import org.example.common.constants.Constant;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
@@ -14,19 +14,19 @@ public class ChangePasswordPage {
 
     // Elements
     protected WebElement getTxtCurrentPassword() {
-        return constant.WEBDRIVER.findElement(_txtCurrentPassword);
+        return Constant.WEBDRIVER.findElement(_txtCurrentPassword);
     }
     protected WebElement getTxtNewPassword() {
-        return constant.WEBDRIVER.findElement(_txtNewPassword);
+        return Constant.WEBDRIVER.findElement(_txtNewPassword);
     }
     protected WebElement getTxtConfirmPassword() {
-        return constant.WEBDRIVER.findElement(_txtConfirmPassword);
+        return Constant.WEBDRIVER.findElement(_txtConfirmPassword);
     }
     protected WebElement getBtnChangePassword() {
-        return constant.WEBDRIVER.findElement(_btnChangePassword);
+        return Constant.WEBDRIVER.findElement(_btnChangePassword);
     }
     protected WebElement getLblChangePasswordSuccessMessage() {
-        return constant.WEBDRIVER.findElement(_lblChangePasswordSuccessMessage);
+        return Constant.WEBDRIVER.findElement(_lblChangePasswordSuccessMessage);
     }
 
 
@@ -55,6 +55,6 @@ public class ChangePasswordPage {
         return getLblChangePasswordSuccessMessage().getText();
     }
     public String getHeader() {
-        return constant.WEBDRIVER.findElement(_lblHeader).getText();
+        return Constant.WEBDRIVER.findElement(_lblHeader).getText();
     }
 }

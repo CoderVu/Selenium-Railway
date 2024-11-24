@@ -1,11 +1,11 @@
-package org.example.TestCases;
+package org.example.TCs;
 
-import org.example.Common.constants.constant;
-import org.example.DataObjects.DataTest;
-import org.example.PageObjects.ChangePasswordPage;
-import org.example.PageObjects.HomePage;
-import org.example.PageObjects.LoginPage;
-import org.example.PageObjects.MyTicketPage;
+import org.example.common.constants.Constant;
+import org.example.DataTest.DataTest;
+import org.example.DataObjects.ChangePasswordPage;
+import org.example.DataObjects.HomePage;
+import org.example.DataObjects.LoginPage;
+import org.example.DataObjects.MyTicketPage;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
@@ -26,14 +26,14 @@ public class LoginTest {
         loginPage = new LoginPage();
         softAssert = new SoftAssert();
 
-        constant.WEBDRIVER = new ChromeDriver();
-        constant.WEBDRIVER.manage().window().maximize();
+        Constant.WEBDRIVER = new ChromeDriver();
+        Constant.WEBDRIVER.manage().window().maximize();
     }
 
     @AfterMethod
     public void afterMethod() {
         System.out.println("Post-condition");
-        constant.WEBDRIVER.quit();
+        Constant.WEBDRIVER.quit();
     }
 
     @Test( description = "TC01 - User can log into Railway with valid username and password", dataProvider = "login_data-active", dataProviderClass = DataTest.class)

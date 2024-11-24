@@ -1,13 +1,12 @@
-package org.example.TestCases;
+package org.example.TCs;
 
-import org.example.Common.constants.constant;
-import org.example.DataObjects.DataTest;
-import org.example.PageObjects.BookTicketPage;
-import org.example.PageObjects.HomePage;
-import org.example.PageObjects.LoginPage;
-import org.example.PageObjects.TimetablePage;
+import org.example.common.constants.Constant;
+import org.example.DataTest.DataTest;
+import org.example.DataObjects.BookTicketPage;
+import org.example.DataObjects.HomePage;
+import org.example.DataObjects.LoginPage;
+import org.example.DataObjects.TimetablePage;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -30,31 +29,32 @@ public class BookTicketTest {
         bookTicketPage = new BookTicketPage();
         timetablePage = new TimetablePage();
         softAssert = new SoftAssert();
-        constant.WEBDRIVER = new ChromeDriver();
-        constant.WEBDRIVER.manage().window().maximize();
+        Constant.WEBDRIVER = new ChromeDriver();
+        Constant.WEBDRIVER.manage().window().maximize();
     }
 
     @AfterMethod
     public void afterMethod() {
         System.out.println("Post-condition");
-        constant.WEBDRIVER.quit();
+        Constant.WEBDRIVER.quit();
     }
 
     @Test(description = "TC14 - User can book 1 ticket at a time", dataProvider = "ticket_data", dataProviderClass = DataTest.class)
-    public void TC14(LocalDate date, String departFrom, String arriveAt, String seatType, int ticketAmount) throws InterruptedException {
+    public void TC14(LocalDate date, String departFrom, String arriveAt, String seatType, int ticketAmount)  {
 
         homePage.open();
 
         loginPage = homePage.gotoLoginPage();
-        loginPage.login(constant.USERNAMEACTIVE, constant.PASSWORD);
+        loginPage.login(Constant.USERNAMEACTIVE, Constant.PASSWORD);
         homePage.gotoBookTicketPage();
 
         bookTicketPage.bookTicket(date, departFrom, arriveAt, seatType, ticketAmount);
-        Assert.assertEquals(bookTicketPage.getLblHeaderText(), "Ticket booked successfully!", "Error message is not displayed as expected");
+
 
         bookTicketPage.isTicketInformationDisplayed(date, departFrom, arriveAt, seatType, ticketAmount);
-        Assert.assertTrue(bookTicketPage.isTicketInformationDisplayed(date, departFrom, arriveAt, seatType, ticketAmount), "Ticket information is not displayed as expected");
-
+        softAssert.assertTrue(bookTicketPage.isTicketInformationDisplayed(date, departFrom, arriveAt, seatType, ticketAmount), "Ticket information is not displayed as expected");
+        softAssert.assertEquals(bookTicketPage.getLblHeaderText(), "Ticket booked successfully!", "Error message is not displayed as expected");
+        softAssert.assertAll();
     }
 
     @Test(description = "TC15 - User can open 'Book ticket' page by clicking on 'Book ticket' link in 'Train timetable' page", dataProvider = "trip_data", dataProviderClass = DataTest.class)
@@ -63,7 +63,7 @@ public class BookTicketTest {
         homePage.open();
 
         LoginPage loginPage = homePage.gotoLoginPage();
-        loginPage.login(constant.USERNAMEACTIVE, constant.PASSWORD);
+        loginPage.login(Constant.USERNAMEACTIVE, Constant.PASSWORD);
 
         homePage.gotoTimetablePage();
 

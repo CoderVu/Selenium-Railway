@@ -1,5 +1,5 @@
-package org.example.PageObjects;
-import org.example.Common.constants.constant;
+package org.example.PO;
+import org.example.common.constants.Constant;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 public class ForgotPasswordPage {
@@ -9,10 +9,10 @@ public class ForgotPasswordPage {
 
     // Elements
     protected WebElement getTxtEmail() {
-        return constant.WEBDRIVER.findElement(_txtEmail);
+        return Constant.WEBDRIVER.findElement(_txtEmail);
     }
     protected WebElement getBtnSendInstructions() {
-        return constant.WEBDRIVER.findElement(_btnSendInstructions);
+        return Constant.WEBDRIVER.findElement(_btnSendInstructions);
     }
 
     // Methods

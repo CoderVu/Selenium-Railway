@@ -1,10 +1,10 @@
-package org.example.TestCases;
+package org.example.TCs;
 
-import org.example.Common.constants.constant;
-import org.example.DataObjects.DataTest;
-import org.example.PageObjects.ChangePasswordPage;
-import org.example.PageObjects.HomePage;
-import org.example.PageObjects.LoginPage;
+import org.example.common.constants.Constant;
+import org.example.DataTest.DataTest;
+import org.example.DataObjects.ChangePasswordPage;
+import org.example.DataObjects.HomePage;
+import org.example.DataObjects.LoginPage;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
@@ -23,14 +23,14 @@ public class ChangePasswordTest {
         changePasswordPage = new ChangePasswordPage();
 
         System.out.println("Pre-condition");
-        constant.WEBDRIVER = new ChromeDriver();
-        constant.WEBDRIVER.manage().window().maximize();
+        Constant.WEBDRIVER = new ChromeDriver();
+        Constant.WEBDRIVER.manage().window().maximize();
     }
 
     @AfterMethod
     public void afterMethod() {
         System.out.println("Post-condition");
-        constant.WEBDRIVER.quit();
+        Constant.WEBDRIVER.quit();
     }
 
     @Test(description = "TC09 - User can change password", dataProvider = "change_password_data", dataProviderClass = DataTest.class)
@@ -39,10 +39,10 @@ public class ChangePasswordTest {
         homePage.open();
 
         LoginPage loginPage = homePage.gotoLoginPage();
-        loginPage.login(constant.USERNAMEACTIVE, constant.PASSWORD);
+        loginPage.login(Constant.USERNAMEACTIVE, Constant.PASSWORD);
 
         homePage.gotoChangePasswordPage();
-        changePasswordPage.changePassword(constant.PASSWORD, newPassword, confirmPassword);
+        changePasswordPage.changePassword(Constant.PASSWORD, newPassword, confirmPassword);
 
         Assert.assertEquals(changePasswordPage.getSuccessMessage(), "Your password has been updated!", "Error message is not displayed as expected");
     }

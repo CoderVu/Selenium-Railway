@@ -1,7 +1,7 @@
-package org.example.PageObjects;
+package org.example.PO;
 
-import org.example.Common.constants.constant;
-import org.example.Common.util.clickButtonByScroll;
+import org.example.common.constants.Constant;
+import org.example.common.util.ScrollClickHandler;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -17,17 +17,17 @@ public class MyTicketPage {
 
     // Methods
     public String getHeader() {
-        return constant.WEBDRIVER.findElement(_lblHeader).getText();
+        return Constant.WEBDRIVER.findElement(_lblHeader).getText();
     }
 
     public void cancelTicket(String departFrom, String arriveAt, String seatType, int ticketAmount) {
-        WebElement cancelButton = constant.WEBDRIVER.findElement(By.xpath("//table//tr[td[text()='" + departFrom + "'] and td[text()='" + arriveAt + "'] and td[text()='" + seatType + "'] and td[text()='" + ticketAmount + "']]//input[@value='Cancel']"));
-        clickButtonByScroll clickButtonByScroll = new clickButtonByScroll(constant.WEBDRIVER);
-        clickButtonByScroll.click(cancelButton);
-        WebDriverWait alertWait = new WebDriverWait(constant.WEBDRIVER, Duration.ofSeconds(3));
+        WebElement cancelButton = Constant.WEBDRIVER.findElement(By.xpath("//table//tr[td[text()='" + departFrom + "'] and td[text()='" + arriveAt + "'] and td[text()='" + seatType + "'] and td[text()='" + ticketAmount + "']]//input[@value='Cancel']"));
+        ScrollClickHandler ScrollClickHandler = new ScrollClickHandler(Constant.WEBDRIVER);
+        ScrollClickHandler.click(cancelButton);
+        WebDriverWait alertWait = new WebDriverWait(Constant.WEBDRIVER, Duration.ofSeconds(3));
         alertWait.until(ExpectedConditions.alertIsPresent());
 
-        Alert alert = constant.WEBDRIVER.switchTo().alert();
+        Alert alert = Constant.WEBDRIVER.switchTo().alert();
         alert.accept();
 
 
@@ -37,7 +37,7 @@ public class MyTicketPage {
     }
 
     public int getTicketCount() {
-        return constant.WEBDRIVER.findElements(By.xpath("//tr[td[text()]]")).size();
+        return Constant.WEBDRIVER.findElements(By.xpath("//table/tbody/tr[td[text()]]")).size();
     }
 
 }

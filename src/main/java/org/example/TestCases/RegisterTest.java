@@ -1,13 +1,14 @@
-package org.example.TestCases;
+package org.example.TCs;
 
-import org.example.Common.constants.constant;
-import org.example.Common.util.confirmUrl;
-import org.example.DataObjects.DataTest;
+import org.example.common.constants.Constant;
+import org.example.common.util.UrlExtractor;
+import org.example.DataTest.DataTest;
 
-import org.example.Common.util.mailConfig;
-import org.example.PageObjects.HomePage;
-import org.example.PageObjects.LoginPage;
-import org.example.PageObjects.RegisterPage;
+import org.example.cf.EmailConfig;
+import org.example.common.util.MailReader;
+import org.example.DataObjects.HomePage;
+import org.example.DataObjects.LoginPage;
+import org.example.DataObjects.RegisterPage;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
@@ -23,6 +24,7 @@ public class RegisterTest {
     HomePage homePage;
     RegisterPage registerPage;
     SoftAssert softAssert;
+    EmailConfig emailConfig;
 
     @BeforeMethod
     public void beforeMethod() {
@@ -30,16 +32,20 @@ public class RegisterTest {
         homePage = new HomePage();
         registerPage = new RegisterPage();
         softAssert = new SoftAssert();
+        emailConfig = new EmailConfig("vunguyen.17082003@gmail.com",
+                "ztxakyuwuvytnpwo",
+                "thanhletraining03@gmail.com"
+        );
 
         System.out.println("Pre-condition");
-        constant.WEBDRIVER = new ChromeDriver();
-        constant.WEBDRIVER.manage().window().maximize();
+        Constant.WEBDRIVER = new ChromeDriver();
+        Constant.WEBDRIVER.manage().window().maximize();
     }
 
     @AfterMethod
     public void afterMethod() {
         System.out.println("Post-condition");
-        constant.WEBDRIVER.quit();
+        Constant.WEBDRIVER.quit();
     }
 
     @Test(description = "TC07: User can create new account", dataProvider = "register_data", dataProviderClass = DataTest.class)
@@ -54,10 +60,10 @@ public class RegisterTest {
 
         Thread.sleep(10000);
 
-        String emailContent = mailConfig.ReadEmail();
+        String emailContent = MailReader.readEmail(emailConfig);
 
-        String confirmationUrl = confirmUrl.ConfirmationUrlRegister(emailContent);
-        constant.WEBDRIVER.get(confirmationUrl);
+        String confirmationUrl = UrlExtractor.ConfirmationUrlRegister(emailContent);
+        Constant.WEBDRIVER.get(confirmationUrl);
     }
 
     @Test(description = "TC08: User can't login with an account hasn't been activated", dataProvider = "register_data", dataProviderClass = DataTest.class)

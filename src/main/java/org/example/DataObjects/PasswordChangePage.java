@@ -1,6 +1,6 @@
-package org.example.PageObjects;
+package org.example.PO;
 
-import org.example.Common.constants.constant;
+import org.example.common.constants.Constant;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
@@ -17,28 +17,28 @@ public class PasswordChangePage {
 
     // Elements
     protected WebElement getTxtNewPassword() {
-        return constant.WEBDRIVER.findElement(_txtNewPassword);
+        return Constant.WEBDRIVER.findElement(_txtNewPassword);
     }
     protected WebElement getTxtConfirmPassword() {
-        return constant.WEBDRIVER.findElement(_txtConfirmPassword);
+        return Constant.WEBDRIVER.findElement(_txtConfirmPassword);
     }
     protected WebElement getTxtPasswordResetToken() {
-        return constant.WEBDRIVER.findElement(_txtPasswordResetToken);
+        return Constant.WEBDRIVER.findElement(_txtPasswordResetToken);
     }
     protected WebElement getBtnResetPassword() {
-        return constant.WEBDRIVER.findElement(_btnResetPassword);
+        return Constant.WEBDRIVER.findElement(_btnResetPassword);
     }
     protected WebElement getLblHeader() {
-        return constant.WEBDRIVER.findElement(_lblHeader);
+        return Constant.WEBDRIVER.findElement(_lblHeader);
     }
     protected WebElement getLblErrorMessage() {
-        return constant.WEBDRIVER.findElement(_lblErrorMessage);
+        return Constant.WEBDRIVER.findElement(_lblErrorMessage);
     }
     protected WebElement getLblErrorMessageConfirmPasswordField() {
-        return constant.WEBDRIVER.findElement(_lblErrorMessageConfirmPasswordField);
+        return Constant.WEBDRIVER.findElement(_lblErrorMessageConfirmPasswordField);
     }
     protected WebElement getLblErrorMessageTokenField() {
-        return constant.WEBDRIVER.findElement(_lblErrorMessageTokenField);
+        return Constant.WEBDRIVER.findElement(_lblErrorMessageTokenField);
     }
 
     // Methods
