@@ -1,4 +1,4 @@
-package org.example.CM.constants;
+package org.example.Common.constants;
 
 import org.openqa.selenium.WebDriver;
 

@@ -1,11 +1,12 @@
-package org.example.PO;
+package org.example.PageObjects;
 
-import org.example.common.constants.Constant;
+import org.example.Common.constants.Constant;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
 public class GeneralPage {
     // Locators
+    public static final By lblHeader = By.xpath("//div[@id='content']/h1");
     private final By tabLogin = By.xpath("//a[@href='/Account/Login.cshtml']");
     private final By tabLogout = By.xpath("//a[@href='/Account/Logout']");
     private final By lblWelcomeMessage = By.xpath("//div[@class='account']/strong");
@@ -16,6 +17,9 @@ public class GeneralPage {
     private final By tabChangePassword = By.xpath("//a[@href='/Account/ChangePassword.cshtml']");
 
     // Elements
+    protected WebElement getLblHeader() {
+        return Constant.WEBDRIVER.findElement(lblHeader);
+    }
     protected WebElement getTabLogin() {
         return Constant.WEBDRIVER.findElement(tabLogin);
     }
@@ -41,9 +45,10 @@ public class GeneralPage {
 
         return Constant.WEBDRIVER.findElement(tabChangePassword);
     }
-
-
     // Methods
+    public String getHeader() {
+        return getLblHeader().getText();
+    }
     public String getWelcomeMessage() {
         return getLblWelcomeMessage().getText();
     }
@@ -67,17 +72,18 @@ public class GeneralPage {
         getMyTicketTab().click();
         return new MyTicketPage();
     }
-
     public ChangePasswordPage gotoChangePasswordPage() {
         getTabChangePassword().click();
         return new ChangePasswordPage();
     }
 
-    public boolean isMyTicketTabDisplayed() { return getMyTicketTab().isDisplayed() ? true : false;
+    public boolean isMyTicketTabDisplayed() {
+        return getMyTicketTab().isDisplayed() ? true : false;
     }
 
 
-    public boolean isChangePasswordTabDisplayed() { return getTabChangePassword().isDisplayed() ? true : false;
+    public boolean isChangePasswordTabDisplayed() {
+        return getTabChangePassword().isDisplayed() ? true : false;
     }
 
     public boolean isLogoutTabDisplayed() {

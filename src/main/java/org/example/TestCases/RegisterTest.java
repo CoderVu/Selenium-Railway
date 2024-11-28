@@ -1,16 +1,18 @@
-package org.example.TCs;
+package org.example.TestCases;
 
-import org.example.common.constants.Constant;
-import org.example.common.util.UrlExtractor;
+import com.aventstack.extentreports.ExtentTest;
+import org.example.Common.constants.Constant;
+import org.example.Common.util.ExtentManager;
+import org.example.DataObjects.Account;
 import org.example.DataTest.DataTest;
 
-import org.example.cf.EmailConfig;
-import org.example.common.util.MailReader;
-import org.example.DataObjects.HomePage;
-import org.example.DataObjects.LoginPage;
-import org.example.DataObjects.RegisterPage;
+import org.example.DataTypes.ExpectedTexts;
+import org.example.PageObjects.HomePage;
+import org.example.PageObjects.LoginPage;
+import org.example.PageObjects.RegisterPage;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.Assert;
+import org.testng.ITestResult;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -23,87 +25,75 @@ public class RegisterTest {
     Random random;
     HomePage homePage;
     RegisterPage registerPage;
+    LoginPage loginPage;
     SoftAssert softAssert;
-    EmailConfig emailConfig;
-
+    ExtentTest extentTest;
     @BeforeMethod
     public void beforeMethod() {
         random = new Random();
         homePage = new HomePage();
         registerPage = new RegisterPage();
         softAssert = new SoftAssert();
-        emailConfig = new EmailConfig("vunguyen.17082003@gmail.com",
-                "ztxakyuwuvytnpwo",
-                "thanhletraining03@gmail.com"
-        );
-
+        loginPage = new LoginPage();
         System.out.println("Pre-condition");
         Constant.WEBDRIVER = new ChromeDriver();
         Constant.WEBDRIVER.manage().window().maximize();
     }
 
     @AfterMethod
-    public void afterMethod() {
-        System.out.println("Post-condition");
+    public void afterMethod(ITestResult result) {
+        if (result.getStatus() == ITestResult.FAILURE) {
+            extentTest.fail("Test failed: " + result.getThrowable().getMessage());
+            String screenshotPath = ExtentManager.captureScreenshot(Constant.WEBDRIVER, result.getName());
+            extentTest.addScreenCaptureFromPath(screenshotPath);
+        } else if (result.getStatus() == ITestResult.SUCCESS) {
+            extentTest.pass("Test passed");
+        } else if (result.getStatus() == ITestResult.SKIP) {
+            extentTest.skip("Test skipped: " + result.getThrowable().getMessage());
+        }
+        ExtentManager.flush();
         Constant.WEBDRIVER.quit();
     }
 
+
     @Test(description = "TC07: User can create new account", dataProvider = "register_data", dataProviderClass = DataTest.class)
-    public void TC07(String email, String password, String confirmPassword, String pid) throws InterruptedException{
-
+    public void TC07(Account account) {
+        extentTest = ExtentManager.createTest("RegisterTest: TC07", "User can create a new account");
         homePage.open();
-        RegisterPage registerPage = homePage.gotoRegisterPage();
-
-        registerPage.register(email, password, confirmPassword, pid);
-
-        Assert.assertEquals(registerPage.getLblRegisterSuccessMessageText(), "Thank you for registering your account", "Register success message is not displayed as expected");
-
-        Thread.sleep(10000);
-
-        String emailContent = MailReader.readEmail(emailConfig);
-
-        String confirmationUrl = UrlExtractor.ConfirmationUrlRegister(emailContent);
-        Constant.WEBDRIVER.get(confirmationUrl);
+        homePage.gotoRegisterPage();
+        String actualMessage = registerPage.registerConfirm(account);
+        Assert.assertEquals(actualMessage, ExpectedTexts.REGISTER_SUCCESS.getText(), "Register success message is not displayed as expected");
     }
 
     @Test(description = "TC08: User can't login with an account hasn't been activated", dataProvider = "register_data", dataProviderClass = DataTest.class)
-    public void TC08 (String email, String password, String confirmPassword, String pid) throws InterruptedException {
-
+    public void TC08 (Account account) {
+        extentTest = ExtentManager.createTest("RegisterTest: TC08", "User can't login with an account hasn't been activated");
         homePage.open();
-
-        RegisterPage registerPage = homePage.gotoRegisterPage();
-        registerPage.register(email, password, confirmPassword, pid);
-
-        LoginPage loginPage = homePage.gotoLoginPage();
-        loginPage.login(email, password);
-        
-        Assert.assertEquals(loginPage.getLoginErrorMsg(), "Invalid username or password. Please try again.", "Error message is not displayed as expected");
+        homePage.gotoRegisterPage();
+        registerPage.registerNotConfirm(account);
+        homePage.gotoLoginPage();
+        loginPage.login(account);
+        Assert.assertEquals(loginPage.getLoginErrorMsg(), ExpectedTexts.LOGIN_ERROT_NOT_ACTIVATED.getText(), "Error message is not displayed as expected");
     }
 
     @Test(description = "TC10: User can't create account with 'Confirm password' is not the same with 'Password'", dataProvider = "register_data_invalid", dataProviderClass = DataTest.class)
-    public void TC10 (String email, String password, String confirmPassword, String pid) {
-
+    public void TC10 (Account account) {
+        extentTest = ExtentManager.createTest("RegisterTest: TC10", "User can't create account with 'Confirm password' is not the same with 'Password'");
         homePage.open();
-
-        RegisterPage registerPage = homePage.gotoRegisterPage();
-        registerPage.register(email, password, confirmPassword, pid);
-
-        Assert.assertEquals(registerPage.getLblRegisterErrorMessageText(), "There're errors in the form. Please correct the errors and try again.", "Error message is not displayed as expected");
+        homePage.gotoRegisterPage();
+        registerPage.register(account);
+        Assert.assertEquals(registerPage.getLblRegisterErrorMessageText(), ExpectedTexts.FORM_ERROR.getText(), "Error message is not displayed as expected");
     }
 
     @Test(description = "TC11: User can't create account while password and PID are not the same", dataProvider = "register_data_empty", dataProviderClass = DataTest.class)
-    public void TC11(String email, String password, String confirmPassword, String pid) {
-
+    public void TC11(Account account) {
+        extentTest = ExtentManager.createTest("RegisterTest: TC11", "User can't create account while password and PID are not the same");
         homePage.open();
-
-        RegisterPage registerPage = homePage.gotoRegisterPage();
-        registerPage.register(email, password, confirmPassword, pid);
-
-        softAssert.assertEquals(registerPage.getLblRegisterErrorMessageText(), "There're errors in the form. Please correct the errors and try again.", "Error message is not displayed as expected");
-        softAssert.assertEquals(registerPage.getLblPasswordErrorMessageText(), "Invalid password length.", "Password error message is not displayed as expected");
-        softAssert.assertEquals(registerPage.getLblPIDErrorMessageText(), "Invalid ID length.", "PID error message is not displayed as expected");
-
+        homePage.gotoRegisterPage();
+        registerPage.register(account);
+        softAssert.assertEquals(registerPage.getLblRegisterErrorMessageText(), ExpectedTexts.FORM_ERROR.getText(), "Error message is not displayed as expected");
+        softAssert.assertEquals(registerPage.getLblPasswordErrorMessageText(), ExpectedTexts.PASSWORD_LENGTH_ERROR.getText(), "Password error message is not displayed as expected");
+        softAssert.assertEquals(registerPage.getLblPIDErrorMessageText(), ExpectedTexts.PID_LENGTH_ERROR.getText(), "PID error message is not displayed as expected");
         softAssert.assertAll();
     }
-
 }

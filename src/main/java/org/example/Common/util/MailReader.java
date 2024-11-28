@@ -1,6 +1,6 @@
-package org.example.CM.util;
+package org.example.Common.util;
 
-import org.example.CF.EmailConfig;
+import org.example.Config.EmailConfig;
 
 import javax.mail.*;
 import java.io.IOException;
@@ -17,7 +17,7 @@ public class MailReader {
 
             try {
                 store = emailSession.getStore("imaps");
-                store.connect(emailConfig.getUser(), emailConfig.getPassword());
+                store.connect(emailConfig.getEmail(), emailConfig.getPassword());
 
                 emailFolder = store.getFolder("INBOX");
                 emailFolder.open(Folder.READ_ONLY);
@@ -33,7 +33,7 @@ public class MailReader {
 
                 for (Message message : messages) {
                     String fromEmail = message.getFrom()[0].toString();
-                    if (fromEmail.contains(emailConfig.getSenderEmail())) {
+                    if (fromEmail.contains(emailConfig.getRecipient())) {
                         emailContent = message.getContent().toString();
                         System.out.println("Email Content: " + emailContent);
                         break;

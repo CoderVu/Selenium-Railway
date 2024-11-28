@@ -1,4 +1,4 @@
-package org.example.CM.util;
+package org.example.Common.util;
 
 import java.util.Random;
 
@@ -12,11 +12,8 @@ public class Generate {
         }
         return password.toString();
     }
-    public static String genaratePassword(){
-        return "12345678";
-    }
     public static  String generateEmail(Random random) {
-        int randomNumber = 100 + random.nextInt(900);
+        int randomNumber = 1000 + random.nextInt(9999 - 1000 + 1);
         return "vunguyen.17082003+" + randomNumber + "@gmail.com";
     }
     public static  String generateRandomPID(Random random, int minLength, int maxLength) {
@@ -26,13 +23,5 @@ public class Generate {
             pid.append(random.nextInt(10));
         }
         return pid.toString();
-    }
-
-    public static String generatePasswordEmpty() {
-        return "";
-    }
-
-    public static String generatePIPEmpty() {
-        return "";
     }
 }
