@@ -2,11 +2,14 @@ package org.example.TestCases;
 
 import com.aventstack.extentreports.ExtentTest;
 import org.example.Common.constants.Constant;
-import org.example.Common.util.ExtentManager;
+import org.example.Common.utils.ExtentManager;
 import org.example.DataObjects.Account;
 import org.example.DataTest.DataTest;
 import org.example.DataTypes.ExpectedTexts;
-import org.example.PageObjects.*;
+import org.example.PageObjects.ChangePasswordPage;
+import org.example.PageObjects.HomePage;
+import org.example.PageObjects.LoginPage;
+import org.example.PageObjects.MyTicketPage;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.Assert;
 import org.testng.ITestResult;

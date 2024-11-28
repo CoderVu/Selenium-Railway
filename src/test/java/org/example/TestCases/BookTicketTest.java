@@ -2,7 +2,7 @@ package org.example.TestCases;
 
 import com.aventstack.extentreports.ExtentTest;
 import org.example.Common.constants.Constant;
-import org.example.Common.util.ExtentManager;
+import org.example.Common.utils.ExtentManager;
 import org.example.DataObjects.Account;
 import org.example.DataObjects.Ticket;
 import org.example.DataTest.DataTest;

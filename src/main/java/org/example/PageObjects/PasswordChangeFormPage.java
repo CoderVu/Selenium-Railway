@@ -1,8 +1,8 @@
 package org.example.PageObjects;
 
 import org.example.Common.constants.Constant;
-import org.example.Common.util.MailReader;
-import org.example.Common.util.UrlExtractor;
+import org.example.Common.utils.MailReader;
+import org.example.Common.utils.UrlExtractor;
 import org.example.Config.EmailConfig;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;

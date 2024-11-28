@@ -2,10 +2,10 @@ package org.example.TestCases;
 
 import com.aventstack.extentreports.ExtentTest;
 import org.example.Common.constants.Constant;
-import org.example.Common.util.ExtentManager;
+import org.example.Common.utils.ExtentManager;
+import org.example.Config.EmailConfig;
 import org.example.DataObjects.Account;
 import org.example.DataTest.DataTest;
-import org.example.Config.EmailConfig;
 import org.example.DataTypes.ExpectedTexts;
 import org.example.PageObjects.*;
 import org.openqa.selenium.chrome.ChromeDriver;

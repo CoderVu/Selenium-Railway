@@ -1,4 +1,4 @@
-package org.example.Common.util;
+package org.example.Common.utils;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;

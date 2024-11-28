@@ -1,4 +1,4 @@
-package org.example.Common.util;
+package org.example.Common.utils;
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.reporter.ExtentSparkReporter;
@@ -7,18 +7,22 @@ import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.io.FileHandler;
-
 import java.io.File;
 import java.io.IOException;
+import java.time.LocalDateTime;
+import static org.example.Common.constants.Constant.DATE_TIME_FORMATTER;
 
 public class ExtentManager {
     private static ExtentReports extent;
     private static ExtentSparkReporter sparkReporter;
     private static ExtentTest test;
 
+
     public static ExtentReports getInstance() {
         if (extent == null) {
-            sparkReporter = new ExtentSparkReporter("src/test/resources/extent-report.html");
+            String timestamp = LocalDateTime.now().format(DATE_TIME_FORMATTER);
+            String reportPath = "src/test/resources/extent-report_" + timestamp + ".html";
+            sparkReporter = new ExtentSparkReporter(reportPath);
             sparkReporter.config().setTheme(Theme.STANDARD);
             sparkReporter.config().setDocumentTitle("Test Report");
             sparkReporter.config().setReportName("Test Report");

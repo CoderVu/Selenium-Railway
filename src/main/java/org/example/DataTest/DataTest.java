@@ -1,16 +1,17 @@
 package org.example.DataTest;
 
-import org.example.Common.util.Generate;
+import org.example.Common.utils.Generate;
 import org.example.DataObjects.Account;
 import org.example.DataObjects.Ticket;
 import org.example.DataTypes.SeatType;
 import org.example.DataTypes.Station;
 import org.testng.annotations.DataProvider;
 
+
 import java.time.LocalDate;
 import java.util.Random;
 
-import static org.example.Common.util.Generate.generateRandomPassword;
+import static org.example.Common.utils.Generate.generateRandomPassword;
 
 public class DataTest {
     @DataProvider(name = "register_data")

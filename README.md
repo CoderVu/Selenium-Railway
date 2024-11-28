@@ -20,12 +20,16 @@ cd Selenium-Railway
 ### 2. Cài đặt các dependencies
 - mvn clean install
 ### 3. Chạy test case
- - chạy test case bằng cách chạy file testng.xml (tất cả test case) bằng lệnh: 
- - mvn test
- - chạy test case cụ thể bằng cách chạy file testng.xml (chỉ chạy test case cụ thể) bằng lệnh: mvn -Dtest=ClassName#methodName test
+ - chạy test case bằng cách chạy file testng.xml (tất cả test case) bằng lệnh: mvn clean test
+ - chạy test case cụ thể bằng cách chạy file testng.xml (chỉ chạy test case cụ thể) bằng lệnh: mvn clean test -Dtest=LoginTest#TC01
  - Cấu trúc dự án
    src/main/java/org/example/Common: Chứa các lớp tiện ích và constants.
    src/main/java/org/example/PageObjects: Chứa các lớp đại diện cho các trang web.
-   src/main/java/org/example/TestCases: Chứa các lớp testcase.
+   src/test/java/org/example/TestCases: Chứa các lớp testcase.
  - Cấu trúc file testng.xml
-   src/main/java/org/example/TestSuites: Chứa các file testng.xml.
+   src/test/resources/testng.xml: Chứa thông tin cấu hình cho TestNG.
+ - Report
+   target/surefire-reports: Chứa kết quả chạy test case.
+   target/surefire-reports/emailable-report.html: Báo cáo kết quả chạy test case.
+   hoặc file extent-report_datetime.html: Báo cáo kết quả chạy test case.
+ 

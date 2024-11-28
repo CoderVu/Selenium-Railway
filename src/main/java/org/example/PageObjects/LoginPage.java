@@ -1,7 +1,7 @@
 package org.example.PageObjects;
 
 import org.example.Common.constants.Constant;
-import org.example.Common.util.ScrollClickHandler;
+import org.example.Common.utils.ScrollClickHandler;
 import org.example.DataObjects.Account;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;

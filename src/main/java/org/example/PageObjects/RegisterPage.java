@@ -1,9 +1,9 @@
 package org.example.PageObjects;
 
 import org.example.Common.constants.Constant;
-import org.example.Common.util.MailReader;
-import org.example.Common.util.ScrollClickHandler;
-import org.example.Common.util.UrlExtractor;
+import org.example.Common.utils.MailReader;
+import org.example.Common.utils.ScrollClickHandler;
+import org.example.Common.utils.UrlExtractor;
 import org.example.Config.EmailConfig;
 import org.example.DataObjects.Account;
 import org.openqa.selenium.By;

@@ -1,4 +1,4 @@
-package org.example.Common.util;
+package org.example.Common.utils;
 
 import org.example.Config.EmailConfig;
 
@@ -9,12 +9,10 @@ import java.util.Arrays;
 public class MailReader {
 
         public static String readEmail(EmailConfig emailConfig) {
-
             Session emailSession = Session.getInstance(emailConfig.getProperties());
             Store store = null;
             Folder emailFolder = null;
             String emailContent = "";
-
             try {
                 store = emailSession.getStore("imaps");
                 store.connect(emailConfig.getEmail(), emailConfig.getPassword());
